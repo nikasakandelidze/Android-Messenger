@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
 import ge.nsakandelidze.customMessenger.R
-import ge.nsakandelidze.customMessenger.view.inboxListing.InboxListActivity
 import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
 
 class SignInActivity : AppCompatActivity() {
