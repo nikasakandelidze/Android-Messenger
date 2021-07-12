@@ -13,25 +13,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/expandedImage"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_background"
-                app:layout_collapseMode="pin" />
+                />
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                app:contentInsetEnd="?attr/actionBarSize"
-                app:contentInsetLeft="?attr/actionBarSize"
-                app:contentInsetRight="?attr/actionBarSize"
-                app:contentInsetStart="?attr/actionBarSize"
-                app:contentInsetStartWithNavigation="?attr/actionBarSize">
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                app:layout_collapseMode="pin"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_input_layout"
