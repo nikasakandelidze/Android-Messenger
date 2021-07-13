@@ -1,7 +1,5 @@
 package ge.nsakandelidze.customMessenger.storage
 
-import android.content.Context
-
 class UserDataStorage {
     fun updateUserWithIdOf(userId: String, nickname: String, profession: String) {
         print("updateing user using the firebase")
@@ -10,7 +8,7 @@ class UserDataStorage {
     companion object {
         private lateinit var INSTANCE: UserDataStorage
 
-        fun createDb(context: Context) {
+        fun createDb() {
             INSTANCE = UserDataStorage()
         }
 

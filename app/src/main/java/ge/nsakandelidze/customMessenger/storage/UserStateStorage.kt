@@ -31,9 +31,9 @@ class UserStateStorage {
         private lateinit var INSTANCE: UserStateStorage
 
         fun createDb(context: Context) {
+            INSTANCE = UserStateStorage()
             INSTANCE.sharedPreferences =
                 context.getSharedPreferences("storage", Context.MODE_PRIVATE)
-            INSTANCE = UserStateStorage()
         }
 
         fun getInstance(): UserStateStorage {

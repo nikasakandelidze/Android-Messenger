@@ -8,6 +8,6 @@ class Initializer : Application() {
     override fun onCreate() {
         super.onCreate()
         UserStateStorage.createDb(this)
-        UserDataStorage.createDb(this)
+        UserDataStorage.createDb()
     }
 }
