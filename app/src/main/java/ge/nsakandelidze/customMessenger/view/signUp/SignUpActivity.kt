@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signUp.SignUpPresenter
-import ge.nsakandelidze.customMessenger.view.inboxListing.InboxListActivity
+import ge.nsakandelidze.customMessenger.view.homepage.HomePageActivity
 
 class SignUpActivity : AppCompatActivity(), ISignUpView {
     private lateinit var presenter: SignUpPresenter
@@ -43,7 +43,7 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
             val password: String = passwordComponent.text.toString()
             val profession: String = professionComponent.text.toString()
             presenter.signUpNewUser(username, password, profession)
-            val intent = Intent(this, InboxListActivity::class.java)
+            val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
         }
     }
