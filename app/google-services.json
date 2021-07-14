@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "952623269087",
+    "firebase_url": "https://android0chat-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "android0chat",
+    "storage_bucket": "android0chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952623269087:android:be921690f6855269c9d56a",
+        "android_client_info": {
+          "package_name": "ge.nsakandelidze.customMessenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952623269087-92fr085gf0cqijh2cfhr9613sr75tfau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZpCaGa790Gy5egzh3KlTPouCnOIwq57E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952623269087-92fr085gf0cqijh2cfhr9613sr75tfau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

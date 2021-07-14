@@ -57,4 +57,8 @@ class ProfileActivity : AppCompatActivity(), IProfile {
         }
     }
 
+    override fun redirectToView(viewName: String) {
+        // redirect to antoher activity
+    }
+
 }
