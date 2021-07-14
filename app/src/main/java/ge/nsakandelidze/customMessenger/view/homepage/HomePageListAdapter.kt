@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Conversation
+import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
-class HomePageListAdapter(val conversations: List<Conversation>) :
+class HomePageListAdapter(val conversations: List<ConversationDto>) :
     RecyclerView.Adapter<ConversationItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationItem {
         val view = LayoutInflater.from(parent.context)
@@ -20,9 +21,9 @@ class HomePageListAdapter(val conversations: List<Conversation>) :
     override fun onBindViewHolder(holder: ConversationItem, position: Int) {
         val conversationItem = conversations[position]
         holder.conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
-        holder.conversationPersonName.text = conversationItem.name
-        holder.lastMessageOfConversation.text = conversationItem.lastSendMessage
-        holder.timeOfConversation.text = conversationItem.sentDate
+        holder.conversationPersonName.text = conversationItem.nickname
+        holder.lastMessageOfConversation.text = conversationItem.lastSentMessage
+        holder.timeOfConversation.text = conversationItem.date
     }
 
     override fun getItemCount(): Int {

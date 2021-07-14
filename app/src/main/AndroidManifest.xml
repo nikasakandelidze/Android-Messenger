@@ -11,12 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomMessenger">
         <activity android:name=".view.profile.ProfileActivity">
+        </activity>
+        <activity android:name=".view.homepage.HomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.homepage.HomePageActivity"></activity>
         <activity android:name=".view.signUp.SignUpActivity" />
         <activity android:name=".view.signIn.SignInActivity"></activity>
     </application>

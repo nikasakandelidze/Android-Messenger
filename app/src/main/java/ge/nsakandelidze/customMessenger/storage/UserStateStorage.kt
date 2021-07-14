@@ -9,13 +9,13 @@ class UserStateStorage {
 
     private val PREFERENCES_USER_ID_KEY = "user_id"
 
-    fun getIdOfUser(): String {
-        return sharedPreferences.getString(PREFERENCES_USER_ID_KEY, "").orEmpty()
+    fun getIdOfUser(): Long {
+        return sharedPreferences.getLong(PREFERENCES_USER_ID_KEY, -1L)
     }
 
-    fun signIn(userId: String) {
+    fun signIn(userId: Long) {
         with(sharedPreferences.edit()) {
-            putString(PREFERENCES_USER_ID_KEY, userId)
+            putLong(PREFERENCES_USER_ID_KEY, userId)
             commit()
         }
     }

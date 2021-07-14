@@ -5,27 +5,17 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ge.nsakandelidze.customMessenger.domain.User
+import java.util.*
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Semaphore
 
 class UserDataStorage {
-    // Write a message to the database
-    val database: FirebaseDatabase = FirebaseDatabase.getInstance();
-    val usersRef = database.getReference("users")
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
+    private val usersRef = database.getReference("users")
 
-    fun updateUserWithIdOf(userId: String, nickname: String, profession: String) {
+    fun updateUserWithIdOf(userId: Long, nickname: String, profession: String) {
         usersRef.child("1").setValue(User(nickname, null, profession))
     }
-
-//    fun fetchUserData(consumer:) {
-//        // Read from the database
-//        usersRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(p0: DataSnapshot) {
-//                val value = p0.value
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//            }
-//        })
-//    }
 
     fun getUserDataWithIdOf(userId: String, consumer: (User) -> Unit) {
         usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {

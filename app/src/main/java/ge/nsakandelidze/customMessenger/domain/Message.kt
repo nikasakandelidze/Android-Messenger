@@ -1,8 +1,22 @@
 package ge.nsakandelidze.customMessenger.domain
 
-data class Message(
-    val content: String? = null,
-    val date: String? = null,
-    val from: Int? = null,
-    val to: Int? = null
-)
+class Message {
+    var content: String? = null
+    var date: String? = null
+    var from: Long? = null
+    var to: Long? = null
+
+    constructor()
+
+    constructor(
+        content: String? = null,
+        date: String? = null,
+        from: Long? = null,
+        to: Long? = null
+    ) {
+        this.content = content
+        this.date = date;
+        this.from = from
+        this.to = to
+    }
+}

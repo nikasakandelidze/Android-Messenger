@@ -16,7 +16,7 @@ class ProfilePresenter(val view: IProfile) {
             view.showMessage("nickname and profession fields cant be empty.")
         } else {
             val userId = userStateStorage.getIdOfUser()
-            userDataStorage.updateUserWithIdOf(userId, nickname, profession)
+            userDataStorage.updateUserWithIdOf(userId, nickname,profession)
             view.updateUserFields(nickname, profession)
         }
     }

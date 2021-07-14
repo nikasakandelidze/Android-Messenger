@@ -1,20 +1,24 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
-import ge.nsakandelidze.customMessenger.domain.Conversation
+import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
+import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
-class HomePageActivity : AppCompatActivity() {
+class HomePageActivity : AppCompatActivity(), IHomePageView {
     private lateinit var conversationsListRecyclerView: RecyclerView
-    private var listOfConversations: MutableList<Conversation> = mutableListOf()
+    private lateinit var presenter: HomePagePresenter
+    private var listOfConversations: MutableList<ConversationDto> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_page_activiy)
         initViewComponents()
+        initState()
     }
 
     private fun initViewComponents() {
@@ -22,5 +26,31 @@ class HomePageActivity : AppCompatActivity() {
         conversationsListRecyclerView.adapter = HomePageListAdapter(listOfConversations)
         conversationsListRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun initState() {
+        this.presenter = HomePagePresenter(this)
+        this.presenter.fetchConversationForCurrentUser()
+    }
+
+    override fun notifyUser(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun updateConversationsList(conversations: List<ConversationDto>) {
+        runOnUiThread {
+            listOfConversations.clear()
+            listOfConversations.addAll(conversations)
+            conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        }
+    }
+
+    override fun AddNewConversationAndupdateConversationsList(conversation: ConversationDto) {
+        runOnUiThread {
+            listOfConversations.add(conversation)
+            conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 }
