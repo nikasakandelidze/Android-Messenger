@@ -1,0 +1,33 @@
+users:[
+   {
+        id: 1,
+        nickname: John,
+        surname: Doe,
+        password: 12345678,
+        profession: lecturer
+   },
+]
+
+
+conversations: [
+    {   
+        id: 1,
+        from_student_id: 1,
+        to_student_id: 2,
+        messages: [
+            {
+                date: <DATE>,
+                content: TEXT,
+                from: 1,
+                to: 2
+            },
+            {
+                date: <DATE>,
+                content: TEXT,
+                from: 2,
+                to: 1
+            }
+        ]
+    }   
+]
+
