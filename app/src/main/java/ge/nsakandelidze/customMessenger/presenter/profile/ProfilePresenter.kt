@@ -21,6 +21,13 @@ class ProfilePresenter(val view: IProfile) {
         }
     }
 
+    fun getUserData() {
+        val idOfUser = userStateStorage.getIdOfUser()
+        userDataStorage.getUserDataWithIdOf("1") {
+            view.updateUserFields(it.nickname.orEmpty(), it.profession.orEmpty())
+        }
+    }
+
     fun signOut() {
         userStateStorage.signOut()
     }

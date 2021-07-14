@@ -26,6 +26,7 @@ class ProfileActivity : AppCompatActivity(), IProfile {
         initViewComponents()
         initListeners()
         this.profilePresenter = ProfilePresenter(this)
+        this.profilePresenter.getUserData()
     }
 
     private fun initViewComponents() {

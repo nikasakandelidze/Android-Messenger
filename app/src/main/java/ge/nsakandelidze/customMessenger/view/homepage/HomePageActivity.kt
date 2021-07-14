@@ -9,13 +9,7 @@ import ge.nsakandelidze.customMessenger.domain.Conversation
 
 class HomePageActivity : AppCompatActivity() {
     private lateinit var conversationsListRecyclerView: RecyclerView
-    private var listOfConversations: MutableList<Conversation> = mutableListOf(
-        Conversation("", "nika", "Hey illbe there soon", "12:2222"),
-        Conversation("", "nikdddda", "wazap", "12:2222"),
-        Conversation("", "nika", "wazap", "12:2222"),
-        Conversation("", "nika", "wazap", "12:2222"),
-        Conversation("", "nika", "wazap", "12:2222")
-    )
+    private var listOfConversations: MutableList<Conversation> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

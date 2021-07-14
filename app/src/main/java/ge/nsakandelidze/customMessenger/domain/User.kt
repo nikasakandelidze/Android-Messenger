@@ -1,3 +1,10 @@
 package ge.nsakandelidze.customMessenger.domain
 
-data class User(val username: String, val password: String, val profession: String)
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+data class User(
+    val nickname: String? = null,
+    val password: String? = null,
+    val profession: String? = null
+)
