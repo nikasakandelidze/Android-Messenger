@@ -12,8 +12,8 @@ users:[
 conversations: [
     {   
         id: 1,
-        from_student_id: 1,
-        to_student_id: 2,
+        student1_id: 1,
+        student2_id: 2,
         messages: [
             {
                 date: <DATE>,

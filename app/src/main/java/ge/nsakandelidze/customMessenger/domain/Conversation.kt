@@ -1,10 +1,16 @@
 package ge.nsakandelidze.customMessenger.domain
 
-data class Conversation(
-    val photo: String,
-    val name: String,
-    val lastSendMessage: String,
-    val sentDate: String
-) {
+class Conversation {
+    val from_student_id: Long? = null
+    val to_student_id: Long? = null
+    val messages: MutableList<Message>? = null
 
+    constructor()
+
+    constructor(
+        from_student_id: Long? = null,
+        to_student_id: Long? = null,
+        messages: MutableList<Message>? = null
+    ) {
+    }
 }
