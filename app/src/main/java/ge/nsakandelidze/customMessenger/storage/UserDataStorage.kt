@@ -42,12 +42,9 @@ class UserDataStorage {
         failCallback: (Unit) -> Unit
     ) {
         checkIfUsernameExist(username, {
-            val key = usersRef.push().key
-            if (key != null) {
-                val user = User(username, password, profession)
-                usersRef.child(key).setValue(user)
-                successCallback(user)
-            }
+            val user = User(username, password, profession)
+            usersRef.child(username).setValue(user)
+            successCallback(user)
         }, {
             failCallback(Unit)
         })

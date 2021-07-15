@@ -21,8 +21,8 @@ class ConversationStorage {
                 val toCollection = children
                     .filter {
                         val value = it.getValue(Conversation::class.java)
-                        value?.from_student_id == idOfUser
-                                || value?.to_student_id == idOfUser
+                        value?.from_student_id.equals(idOfUser)
+                                || value?.to_student_id.equals(idOfUser)
                     }.mapNotNull {
                         val value = it.getValue(Conversation::class.java)
                         value

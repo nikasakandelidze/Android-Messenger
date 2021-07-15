@@ -22,7 +22,7 @@ class HomePagePresenter(val view: IHomePageView) {
                     val fromStudentId = conv.from_student_id
                     val toStudentId = conv.to_student_id
                     var idOfAnotherUser = ""
-                    if (fromStudentId == idOfUser) {
+                    if (fromStudentId.equals(idOfUser)) {
                         idOfAnotherUser = toStudentId.toString()
                     } else {
                         idOfAnotherUser = fromStudentId.toString()
