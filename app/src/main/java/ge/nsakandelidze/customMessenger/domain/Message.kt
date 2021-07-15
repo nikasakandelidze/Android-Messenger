@@ -3,16 +3,16 @@ package ge.nsakandelidze.customMessenger.domain
 class Message {
     var content: String? = null
     var date: String? = null
-    var from: Long? = null
-    var to: Long? = null
+    var from: String? = null
+    var to: String? = null
 
     constructor()
 
     constructor(
         content: String? = null,
         date: String? = null,
-        from: Long? = null,
-        to: Long? = null
+        from: String? = null,
+        to: String? = null
     ) {
         this.content = content
         this.date = date;

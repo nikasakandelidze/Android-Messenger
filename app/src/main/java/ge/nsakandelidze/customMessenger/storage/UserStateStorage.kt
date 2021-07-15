@@ -7,15 +7,15 @@ class UserStateStorage {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-    private val PREFERENCES_USER_ID_KEY = "user_id"
+    private val PREFERENCES_USER_ID_KEY = "user_nickname"
 
-    fun getIdOfUser(): Long {
-        return sharedPreferences.getLong(PREFERENCES_USER_ID_KEY, -1L)
+    fun getIdOfUser(): String {
+        return sharedPreferences.getString(PREFERENCES_USER_ID_KEY, "").orEmpty()
     }
 
-    fun signIn(userId: Long) {
+    fun signIn(userId: String) {
         with(sharedPreferences.edit()) {
-            putLong(PREFERENCES_USER_ID_KEY, userId)
+            putString(PREFERENCES_USER_ID_KEY, userId)
             commit()
         }
     }

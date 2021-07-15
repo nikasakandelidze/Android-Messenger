@@ -12,7 +12,7 @@ class ConversationStorage {
     private val usersRef = database.getReference("conversations")
 
     fun fetchAllConversationsForUser(
-        idOfUser: Long,
+        idOfUser: String,
         consumer: (MutableList<Conversation>) -> Unit
     ) {
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {

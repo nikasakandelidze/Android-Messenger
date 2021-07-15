@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signIn.SignInPresenter
+import ge.nsakandelidze.customMessenger.view.homepage.HomePageActivity
 import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
 
 class SignInActivity : AppCompatActivity(), ISignIn {
@@ -17,6 +18,7 @@ class SignInActivity : AppCompatActivity(), ISignIn {
     private lateinit var usernameComponent: TextInputEditText
     private lateinit var passwordComponent: TextInputEditText
     private lateinit var signInButton: Button
+    private lateinit var signUpButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +37,24 @@ class SignInActivity : AppCompatActivity(), ISignIn {
         presenter = SignInPresenter(this)
         usernameComponent = findViewById(R.id.username)
         passwordComponent = findViewById(R.id.password)
-        signInButton = findViewById<Button>(R.id.sign_in_button)
+        signInButton = findViewById(R.id.sign_in_button)
+        signUpButton = findViewById(R.id.sign_up_button)
     }
 
     private fun initializeSignUpButtonListener() {
-        findViewById<Button>(R.id.sign_up_button).setOnClickListener {
+        signInButton.setOnClickListener {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
-            val success = presenter.signInUser(username, password)
-            if(success) {
-                val intent = Intent(this, SignUpActivity::class.java)
+            presenter.signInUser(username, password, {
+                val intent = Intent(this, HomePageActivity::class.java)
                 startActivity(intent)
-            }
+            }, {
+                Toast.makeText(this, "Sign in failed", Toast.LENGTH_LONG).show()
+            })
+        }
+        signUpButton.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 

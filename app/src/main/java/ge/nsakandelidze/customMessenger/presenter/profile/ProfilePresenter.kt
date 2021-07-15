@@ -23,7 +23,7 @@ class ProfilePresenter(val view: IProfile) {
 
     fun getUserData() {
         val idOfUser = userStateStorage.getIdOfUser()
-        userDataStorage.getUserDataWithIdOf("1") {
+        userDataStorage.getUserDataWithIdOf(idOfUser) {
             view.updateUserFields(it.nickname.orEmpty(), it.profession.orEmpty())
         }
     }

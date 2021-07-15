@@ -42,11 +42,12 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
             val profession: String = professionComponent.text.toString()
-            val success = presenter.signUpNewUser(username, password, profession)
-            if(success) {
+            presenter.signUpNewUser(username, password, profession, {
                 val intent = Intent(this, HomePageActivity::class.java)
                 startActivity(intent)
-            }
+            }, {
+                Toast.makeText(this, "Failed to sign up", Toast.LENGTH_LONG).show()
+            })
         }
     }
 

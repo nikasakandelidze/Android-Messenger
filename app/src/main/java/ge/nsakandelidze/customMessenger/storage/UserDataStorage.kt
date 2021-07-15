@@ -16,8 +16,8 @@ class UserDataStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
     private val usersRef = database.getReference("users")
 
-    fun updateUserWithIdOf(userId: Long, nickname: String, profession: String) {
-        usersRef.child("1").setValue(User(nickname, null, profession))
+    fun updateUserWithIdOf(userId: String, nickname: String, profession: String) {
+        usersRef.child(userId).setValue(User(nickname, null, profession))
     }
 
     fun getUserDataWithIdOf(userId: String, consumer: (User) -> Unit) {
@@ -34,51 +34,74 @@ class UserDataStorage {
         })
     }
 
-    fun addUser(username: String, password: String, profession: String): Boolean {
-        Log.d("adduser", "bla")
-        val exists = checkIfUserameExist(username)
-        Log.d("exists", exists.toString())
-        if(exists) {
-            var key = usersRef.push().key
+    fun addUser(
+        username: String,
+        password: String,
+        profession: String,
+        successCallback: (User) -> Unit,
+        failCallback: (Unit) -> Unit
+    ) {
+        checkIfUsernameExist(username, {
+            val key = usersRef.push().key
             if (key != null) {
                 val user = User(username, password, profession)
                 usersRef.child(key).setValue(user)
+                successCallback(user)
             }
-            return true
-        }
-        return false
+        }, {
+            failCallback(Unit)
+        })
     }
 
-    fun checkIfUserameExist(username: String): Boolean {
-        var users = getUsers()
-        for (user in users){
-            if(user.nickname == username){
-                return false
+    private fun checkIfUsernameExist(
+        username: String,
+        successCallback: (Unit) -> Unit,
+        failCallback: (Unit) -> Unit
+    ) {
+        getUsers {
+            var found = false
+            for (user in it) {
+                if (user?.nickname == username) {
+                    failCallback(Unit)
+                    found = true
+                }
+            }
+            if (!found) {
+                successCallback(Unit)
             }
         }
-        return true
     }
 
-    fun checkIfUserExist(username: String, password: String): Boolean{
-        var users = getUsers()
-        for (user in users){
-            if(user.nickname == username && password == password){
-                return true
+    fun checkIfUserExist(
+        username: String,
+        password: String,
+        successCallback: (User) -> Unit,
+        failCallback: (Unit) -> Unit
+    ) {
+        getUsers {
+            var found = false
+            for (user in it) {
+                if (user?.nickname == username && user.password == password) {
+                    successCallback(user)
+                    found = true
+                }
+            }
+            if (!found) {
+                failCallback(Unit)
             }
         }
-        return fasle
     }
 
-    fun getUsers(consumer: (MutableList<User?>) -> Unit) {
-        val userList = mutableListOf<User>()
-        usersRef.addValueEventListener(object : ValueEventListener {
+    private fun getUsers(consumer: (MutableList<User?>) -> Unit) {
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val users = dataSnapshot.children
-                    .map{
+                    .map {
                         it.getValue(User::class.java)
                     }.toCollection(mutableListOf())
                 consumer(users)
             }
+
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 Log.w(ContentValues.TAG, "Failed to read value.", error.toException())

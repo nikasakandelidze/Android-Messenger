@@ -14,7 +14,7 @@ class HomePagePresenter(val view: IHomePageView) {
 
     fun fetchConversationForCurrentUser() {
         val idOfUser = userStateStorage.getIdOfUser()
-        if (idOfUser == -1L) {
+        if (idOfUser.isEmpty()) {
             view.notifyUser("You are not logged in")
         } else {
             conversationStorage.fetchAllConversationsForUser(idOfUser) { ls ->
