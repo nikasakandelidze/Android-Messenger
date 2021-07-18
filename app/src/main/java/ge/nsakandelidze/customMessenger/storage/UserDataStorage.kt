@@ -16,8 +16,8 @@ class UserDataStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
     private val usersRef = database.getReference("users")
 
-    fun updateUserWithIdOf(userId: String, nickname: String, profession: String) {
-        usersRef.child(userId).setValue(User(nickname, null, profession))
+    fun updateUserWithIdOf(userId: String, nickname: String, password: String ,profession: String) {
+        usersRef.child(userId).setValue(User(nickname, password, profession))
     }
 
     fun getUserDataWithIdOf(userId: String, consumer: (User) -> Unit) {
