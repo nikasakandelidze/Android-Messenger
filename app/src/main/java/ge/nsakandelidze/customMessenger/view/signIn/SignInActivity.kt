@@ -11,6 +11,7 @@ import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signIn.SignInPresenter
 import ge.nsakandelidze.customMessenger.view.homepage.HomePageActivity
 import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
+import ge.nsakandelidze.customMessenger.view.viewpager.ViewPagerActivity
 
 class SignInActivity : AppCompatActivity(), ISignIn {
 
@@ -46,7 +47,7 @@ class SignInActivity : AppCompatActivity(), ISignIn {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
             presenter.signInUser(username, password, {
-                val intent = Intent(this, HomePageActivity::class.java)
+                val intent = Intent(this, ViewPagerActivity::class.java)
                 startActivity(intent)
             }, {
                 Toast.makeText(this, "Sign in failed", Toast.LENGTH_LONG).show()
