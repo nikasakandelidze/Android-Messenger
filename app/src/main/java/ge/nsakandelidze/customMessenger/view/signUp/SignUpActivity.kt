@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signUp.SignUpPresenter
-import ge.nsakandelidze.customMessenger.view.homepage.HomePageActivity
 import ge.nsakandelidze.customMessenger.view.viewpager.ViewPagerActivity
 
 class SignUpActivity : AppCompatActivity(), ISignUpView {

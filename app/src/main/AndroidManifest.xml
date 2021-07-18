@@ -10,9 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomMessenger">
-        <activity android:name=".view.profile.ProfileActivity"/>
         <activity android:name=".view.signUp.SignUpActivity"/>
-        <activity android:name=".view.homepage.HomePageActivity" />
         <activity android:name=".view.viewpager.ViewPagerActivity"/>
         <activity android:name=".view.signIn.SignInActivity">
             <intent-filter>
