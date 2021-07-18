@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.profile.ProfilePresenter
+import ge.nsakandelidze.customMessenger.view.signIn.SignInActivity
 import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
 
 
@@ -109,12 +110,12 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
     }
 
     override fun showMessage(message: String) {
-        //Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun redirectToView(viewName: String) {
         // redirect to antoher activity
-        val intent = Intent(activity, SignUpActivity::class.java)
+        val intent = Intent(activity, SignInActivity::class.java)
         startActivity(intent)
     }
 }
