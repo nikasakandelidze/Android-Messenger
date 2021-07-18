@@ -30,5 +30,6 @@ class ProfilePresenter(val view: IProfile) {
 
     fun signOut() {
         userStateStorage.signOut()
+        view.redirectToView("bla")
     }
 }
