@@ -14,13 +14,14 @@
         app:layout_constraintBottom_toTopOf="@+id/username_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/profile_picture" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_input_layout"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Enter your username"
+        android:hint="@string/enter_your_username"
         app:boxStrokeWidth="0dp"
         app:layout_constraintBottom_toTopOf="@+id/password_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +39,7 @@
         android:id="@+id/password_input_layout"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Enter your password"
+        android:hint="@string/enter_your_password"
         app:boxStrokeWidth="0dp"
         app:layout_constraintBottom_toTopOf="@+id/what_i_do_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
         android:id="@+id/what_i_do_input_layout"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="What i do"
+        android:hint="@string/what_i_do"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +82,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_button_shape"
         android:backgroundTint="@color/white"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

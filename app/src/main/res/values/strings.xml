@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Custom Messenger</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="not_registered">Not registered?</string>
+    <string name="profile_picture">profile picture</string>
+    <string name="what_i_do">What i do</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="search">Search</string>
 </resources>

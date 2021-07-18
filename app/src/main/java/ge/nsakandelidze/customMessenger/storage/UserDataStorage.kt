@@ -50,7 +50,7 @@ class UserDataStorage {
         })
     }
 
-    private fun checkIfUsernameExist(
+     fun checkIfUsernameExist(
         username: String,
         successCallback: (Unit) -> Unit,
         failCallback: (Unit) -> Unit
