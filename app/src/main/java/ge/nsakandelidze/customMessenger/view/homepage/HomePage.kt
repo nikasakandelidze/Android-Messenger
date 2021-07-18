@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class HomePage : Fragment(R.layout.activity_profile) {
+class HomePage : Fragment(R.layout.home_page_activiy) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -39,7 +39,7 @@ class HomePage : Fragment(R.layout.activity_profile) {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.activity_profile, container, false)
+        val view: View = inflater.inflate(R.layout.home_page_activiy, container, false)
 
         return view
     }

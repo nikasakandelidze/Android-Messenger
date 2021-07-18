@@ -19,7 +19,7 @@ class ViewPagerActivity : AppCompatActivity() {
             this.supportActionBar?.hide()
         }
         setContentView(R.layout.view_pager)
-        val info : List<Fragment> = listOf(ProfilePage(), HomePage())
+        val info : List<Fragment> = listOf(HomePage(), ProfilePage())
 
         val adapter = ViewPagerAdapter(info, this)
 
