@@ -17,8 +17,13 @@ class ProfilePresenter(val view: IProfile) {
         } else {
             val userId = userStateStorage.getIdOfUser()
             userDataStorage.getUserDataWithIdOf(userId) {
-                userDataStorage.updateUserWithIdOf(userId, nickname, it.password!!, profession)
-                view.updateUserFields(nickname.orEmpty(), profession.orEmpty())
+                userDataStorage.updateUserWithIdOf(userId, nickname, it.password!!, profession, {
+                    userStateStorage.signOut()
+                    userStateStorage.signIn(nickname)
+                    view.updateUserFields(nickname, profession)
+                }, {
+                    view.showMessage("Couldn't update nickname, it already exists.")
+                })
             }
         }
     }

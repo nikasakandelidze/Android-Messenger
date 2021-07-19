@@ -16,8 +16,30 @@ class UserDataStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
     private val usersRef = database.getReference("users")
 
-    fun updateUserWithIdOf(userId: String, nickname: String, password: String ,profession: String) {
-        usersRef.child(userId).setValue(User(nickname, password, profession))
+    fun updateUserWithIdOf(
+        userId: String,
+        nickname: String,
+        password: String,
+        profession: String,
+        successCallback: (Unit) -> Unit,
+        failCallback: (Unit) -> Unit
+    ) {
+        usersRef.child(nickname).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                val value = p0.getValue(User::class.java)
+                if (value == null) {
+                    usersRef.child(userId).removeValue()
+                    usersRef.child(nickname).setValue(User(nickname, password, profession))
+                    successCallback(Unit)
+                } else {
+                    failCallback(Unit)
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     fun getUserDataWithIdOf(userId: String, consumer: (User) -> Unit) {
@@ -50,7 +72,7 @@ class UserDataStorage {
         })
     }
 
-     fun checkIfUsernameExist(
+    fun checkIfUsernameExist(
         username: String,
         successCallback: (Unit) -> Unit,
         failCallback: (Unit) -> Unit

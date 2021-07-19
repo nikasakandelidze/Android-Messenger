@@ -23,6 +23,7 @@ class SignUpPresenter(val view: ISignUpView) {
         Log.d("pass", password)
         if (inputParametersValid) {
             userDataStorage.addUser(username, password, profession, {
+                userStateStorage.signOut()
                 userStateStorage.signIn(it.nickname.orEmpty())
                 sucessCallback(Unit)
             }, {
