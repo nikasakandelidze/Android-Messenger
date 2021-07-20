@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signUp.SignUpPresenter
-import ge.nsakandelidze.customMessenger.view.viewpager.ViewPagerActivity
+import ge.nsakandelidze.customMessenger.view.viewpager.MainPageContainerActivity
 
 class SignUpActivity : AppCompatActivity(), ISignUpView {
     private lateinit var presenter: SignUpPresenter
@@ -43,7 +43,7 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
             val password: String = passwordComponent.text.toString()
             val profession: String = professionComponent.text.toString()
             presenter.signUpNewUser(username, password, profession, {
-                val intent = Intent(this, ViewPagerActivity::class.java)
+                val intent = Intent(this, MainPageContainerActivity::class.java)
                 startActivity(intent)
             }, {
                 Toast.makeText(this, "Failed to sign up", Toast.LENGTH_LONG).show()

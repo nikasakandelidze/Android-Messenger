@@ -10,7 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.signIn.SignInPresenter
 import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
-import ge.nsakandelidze.customMessenger.view.viewpager.ViewPagerActivity
+import ge.nsakandelidze.customMessenger.view.viewpager.MainPageContainerActivity
 
 class SignInActivity : AppCompatActivity(), ISignIn {
 
@@ -46,7 +46,7 @@ class SignInActivity : AppCompatActivity(), ISignIn {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
             presenter.signInUser(username, password, {
-                val intent = Intent(this, ViewPagerActivity::class.java)
+                val intent = Intent(this, MainPageContainerActivity::class.java)
                 startActivity(intent)
             }, {
                 Toast.makeText(this, "Sign in failed", Toast.LENGTH_LONG).show()
