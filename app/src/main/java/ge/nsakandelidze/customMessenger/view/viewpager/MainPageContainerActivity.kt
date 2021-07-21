@@ -18,7 +18,7 @@ class MainPageContainerActivity : AppCompatActivity() {
         }
         setContentView(R.layout.fragments_container_layout)
 
-        val findViewById = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val findViewById = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         val onNavigationItemSelectedListener =
             BottomNavigationView.OnNavigationItemSelectedListener {
