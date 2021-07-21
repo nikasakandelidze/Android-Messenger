@@ -24,15 +24,24 @@ class UserDataStorage {
         successCallback: (Unit) -> Unit,
         failCallback: (Unit) -> Unit
     ) {
-        usersRef.child(nickname).addListenerForSingleValueEvent(object : ValueEventListener {
+        getUsers {
+            val find: User? = it.find { !(it?.id.equals(userId)) && it?.nickname.equals(nickname) }
+            if (find != null) {
+                failCallback(Unit)
+            } else {
+                usersRef.child(userId).setValue(User(userId, nickname, password, profession))
+                successCallback(Unit)
+            }
+        }
+        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
+
                 val value = p0.getValue(User::class.java)
                 if (value == null) {
                     usersRef.child(userId).removeValue()
                     usersRef.child(nickname).setValue(User(nickname, password, profession))
                     successCallback(Unit)
                 } else {
-                    failCallback(Unit)
                 }
             }
 
@@ -64,9 +73,12 @@ class UserDataStorage {
         failCallback: (Unit) -> Unit
     ) {
         checkIfUsernameExist(username, {
-            val user = User(username, password, profession)
-            usersRef.child(username).setValue(user)
-            successCallback(user)
+            val id = usersRef.push().key
+            val user = User(id, username, password, profession)
+            id?.let {
+                usersRef.child(id).setValue(user)
+                successCallback(user)
+            }
         }, {
             failCallback(Unit)
         })
@@ -116,7 +128,9 @@ class UserDataStorage {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val users = dataSnapshot.children
                     .map {
-                        it.getValue(User::class.java)
+                        val value = it.getValue(User::class.java)
+                        value?.id = it.key
+                        value
                     }.toCollection(mutableListOf())
                 consumer(users)
             }

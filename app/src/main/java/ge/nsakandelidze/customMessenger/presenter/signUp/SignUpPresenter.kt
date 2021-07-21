@@ -19,13 +19,13 @@ class SignUpPresenter(val view: ISignUpView) {
         failCallback: (Unit) -> Unit
     ) {
         val inputParametersValid = validator.isInputParametersValid(username, password, profession)
-        Log.d("user", username)
-        Log.d("pass", password)
         if (inputParametersValid) {
             userDataStorage.addUser(username, password, profession, {
                 userStateStorage.signOut()
-                userStateStorage.signIn(it.nickname.orEmpty())
-                sucessCallback(Unit)
+                it.id?.let {
+                    userStateStorage.signIn(it)
+                    sucessCallback(Unit)
+                }
             }, {
                 failCallback(Unit)
             })

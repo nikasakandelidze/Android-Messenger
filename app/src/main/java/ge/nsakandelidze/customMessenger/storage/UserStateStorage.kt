@@ -7,7 +7,7 @@ class UserStateStorage {
 
     private lateinit var sharedPreferences: SharedPreferences
 
-    private val PREFERENCES_USER_ID_KEY = "user_nickname"
+    private val PREFERENCES_USER_ID_KEY = "user_id"
 
     fun getIdOfUser(): String {
         return sharedPreferences.getString(PREFERENCES_USER_ID_KEY, "").orEmpty()
