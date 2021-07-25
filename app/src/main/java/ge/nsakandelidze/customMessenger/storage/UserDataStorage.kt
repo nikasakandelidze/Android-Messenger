@@ -119,7 +119,7 @@ class UserDataStorage {
         }
     }
 
-    private fun getUsers(consumer: (MutableList<User?>) -> Unit) {
+    fun getUsers(consumer: (MutableList<User?>) -> Unit) {
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val users = dataSnapshot.children
