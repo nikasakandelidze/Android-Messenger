@@ -8,8 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
-import ge.nsakandelidze.customMessenger.storage.UserStateStorage
-import ge.nsakandelidze.customMessenger.view.chat.ChatActivity
+import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
 class HomePageListAdapter(val conversations: List<ConversationDto>) :
@@ -37,7 +36,7 @@ class HomePageListAdapter(val conversations: List<ConversationDto>) :
 
     private fun initializeClickListener(view: View) {
         view.setOnClickListener {
-            val chatIntent = Intent(view.context, ChatActivity::class.java).putExtra(
+            val chatIntent = Intent(view.context, ChatPage::class.java).putExtra(
                 "otherUserId",
                 view.findViewById<TextView>(R.id.id_of_another_user).text
             )

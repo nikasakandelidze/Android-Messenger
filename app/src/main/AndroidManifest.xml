@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomMessenger">
         <activity android:name=".view.searchPage.UsersSearchActivity" />
-        <activity android:name=".view.chat.ChatActivity" />
+        <activity android:name=".view.chat.ChatPage" />
         <activity android:name=".view.signUp.SignUpActivity" />
         <activity android:name=".view.viewpager.MainPageContainerActivity" />
         <activity android:name=".view.signIn.SignInActivity">

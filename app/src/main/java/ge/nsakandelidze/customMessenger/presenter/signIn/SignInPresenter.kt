@@ -19,7 +19,7 @@ class SignInPresenter(val view: ISignIn) {
         val inputParametersValid = validator.isInputParametersValid(username, password)
         if (inputParametersValid) {
             userDataStorage.checkIfUserExist(username, password, {
-                userStateStorage.signIn(it.id.orEmpty())
+                    userStateStorage.signIn(it.id.orEmpty())
                 successCallback(Unit)
             }, failCallback)
         } else {

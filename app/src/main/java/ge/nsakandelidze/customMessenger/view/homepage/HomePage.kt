@@ -45,7 +45,7 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.home_page_activiy, container, false)
         initViewComponents(view)
-        initState(view)
+        initState()
         return view
     }
 
@@ -56,7 +56,7 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun initState(view: View) {
+    private fun initState() {
         this.presenter = HomePagePresenter(this)
         this.presenter.fetchConversationForCurrentUser()
     }
