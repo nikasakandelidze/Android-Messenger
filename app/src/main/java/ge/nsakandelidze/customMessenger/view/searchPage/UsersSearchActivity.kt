@@ -28,7 +28,7 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
         usersSearchListRecyclerView = findViewById<RecyclerView>(R.id.users_list)
         usersSearchListRecyclerView.adapter = UsersSearchListAdapter(usersList)
         usersSearchListRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initState() {
