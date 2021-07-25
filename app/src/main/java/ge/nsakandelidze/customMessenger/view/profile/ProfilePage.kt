@@ -12,14 +12,12 @@ import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.profile.ProfilePresenter
 import ge.nsakandelidze.customMessenger.view.signIn.SignInActivity
-import ge.nsakandelidze.customMessenger.view.signUp.SignUpActivity
 
 class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
     private lateinit var nickNameEditText: TextInputEditText
     private lateinit var professionEditText: TextInputEditText
     private lateinit var updateButton: Button
     private lateinit var signOutButton: Button
-
     private lateinit var profilePresenter: ProfilePresenter
 
     override fun onCreateView(
@@ -67,7 +65,7 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
     }
 
     override fun redirectToView(viewName: String) {
-        // redirect to antoher activity
+        // redirect to another activity
         val intent = Intent(activity, SignInActivity::class.java)
         startActivity(intent)
     }

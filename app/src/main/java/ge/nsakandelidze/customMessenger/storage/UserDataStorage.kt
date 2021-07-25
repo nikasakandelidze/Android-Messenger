@@ -6,11 +6,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.User
-import java.util.*
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Semaphore
 
 class UserDataStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();

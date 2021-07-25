@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 class UserStateStorage {
 
     private lateinit var sharedPreferences: SharedPreferences
-
     private val PREFERENCES_USER_ID_KEY = "user_id"
 
     fun getIdOfUser(): String {

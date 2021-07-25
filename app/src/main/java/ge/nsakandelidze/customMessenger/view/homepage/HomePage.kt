@@ -41,7 +41,6 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
     }
 
 
@@ -89,17 +88,17 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
     }
 
     override fun notifyUser(message: String) {
-            Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
     override fun updateConversationsList(conversations: List<ConversationDto>) {
-            listOfConversations.clear()
-            listOfConversations.addAll(conversations)
-            conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        listOfConversations.clear()
+        listOfConversations.addAll(conversations)
+        conversationsListRecyclerView.adapter?.notifyDataSetChanged()
     }
 
     override fun AddNewConversationAndupdateConversationsList(conversation: ConversationDto) {
-            listOfConversations.add(conversation)
-            conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        listOfConversations.add(conversation)
+        conversationsListRecyclerView.adapter?.notifyDataSetChanged()
     }
 }

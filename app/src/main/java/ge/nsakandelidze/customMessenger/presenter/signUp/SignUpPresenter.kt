@@ -1,6 +1,5 @@
 package ge.nsakandelidze.customMessenger.presenter.signUp
 
-import android.util.Log
 import ge.nsakandelidze.customMessenger.storage.UserDataStorage
 import ge.nsakandelidze.customMessenger.storage.UserStateStorage
 import ge.nsakandelidze.customMessenger.view.signUp.ISignUpView
