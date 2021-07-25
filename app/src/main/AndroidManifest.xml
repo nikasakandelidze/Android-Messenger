@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CustomMessenger">
-        <activity android:name=".view.searchPage.SearchActivity"/>
-        <activity android:name=".view.signUp.SignUpActivity"/>
-        <activity android:name=".view.viewpager.MainPageContainerActivity"/>
+        <activity android:name=".view.searchPage.SearchActivity" />
+        <activity android:name=".view.chat.ChatActivity" />
+        <activity android:name=".view.signUp.SignUpActivity" />
+        <activity android:name=".view.viewpager.MainPageContainerActivity" />
         <activity android:name=".view.signIn.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

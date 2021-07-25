@@ -9,6 +9,7 @@ import ge.nsakandelidze.customMessenger.domain.Conversation
 class ConversationStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
     private val usersRef = database.getReference("conversations")
+    private val conversations = mutableListOf<Conversation>()
 
     fun fetchAllConversationsForUser(
         idOfUser: String,
@@ -26,6 +27,7 @@ class ConversationStorage {
                         val value = it.getValue(Conversation::class.java)
                         value
                     }.toCollection(mutableListOf())
+                conversations.addAll(toCollection)
                 consumer(toCollection)
             }
 
@@ -33,6 +35,33 @@ class ConversationStorage {
             }
         })
     }
+
+
+    fun getConversationDetailsForUsers(
+        loggedInUserId: String,
+        otherUserId: String,
+        consumer: (Conversation) -> Unit
+    ) {
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                val children = p0.children
+                val conversation = children
+                    .filter {
+                        val value = it.getValue(Conversation::class.java)
+                        (value?.from_student_id.equals(loggedInUserId) && value?.to_student_id.equals(otherUserId))
+                                ||   (value?.from_student_id.equals(otherUserId) && value?.to_student_id.equals(loggedInUserId))
+                    }.mapNotNull {
+                        val value = it.getValue(Conversation::class.java)
+                        value
+                    }.first()
+                consumer(conversation)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+    }
+
 
     companion object {
         private lateinit var INSTANCE: ConversationStorage

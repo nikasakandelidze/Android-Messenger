@@ -1,5 +1,6 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +8,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
+import ge.nsakandelidze.customMessenger.storage.UserStateStorage
+import ge.nsakandelidze.customMessenger.view.chat.ChatActivity
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
 class HomePageListAdapter(val conversations: List<ConversationDto>) :
     RecyclerView.Adapter<ConversationItem>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationItem {
-        val view = LayoutInflater.from(parent.context)
+        val view: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.home_page_conversation_item, parent, false)
+        initializeClickListener(view)
         return ConversationItem(view)
     }
 
@@ -23,10 +28,21 @@ class HomePageListAdapter(val conversations: List<ConversationDto>) :
         holder.conversationPersonName.text = conversationItem.nickname
         holder.lastMessageOfConversation.text = conversationItem.lastSentMessage
         holder.timeOfConversation.text = conversationItem.date
+        holder.idOfAnotherUser.text = conversationItem.idOfAnotherUser
     }
 
     override fun getItemCount(): Int {
         return conversations.size
+    }
+
+    private fun initializeClickListener(view: View) {
+        view.setOnClickListener {
+            val chatIntent = Intent(view.context, ChatActivity::class.java).putExtra(
+                "otherUserId",
+                view.findViewById<TextView>(R.id.id_of_another_user).text
+            )
+            view.context.startActivity(chatIntent)
+        }
     }
 }
 
@@ -36,4 +52,5 @@ class ConversationItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val lastMessageOfConversation =
         itemView.findViewById<TextView>(R.id.last_message_of_conversation)
     val timeOfConversation = itemView.findViewById<TextView>(R.id.time_of_message_sent)
+    val idOfAnotherUser = itemView.findViewById<TextView>(R.id.id_of_another_user)
 }

@@ -5,5 +5,6 @@ class ConversationDto(
     val image: String,
     val lastSentMessage: String,
     val date: String,
+    val idOfAnotherUser: String
 ) {
 }

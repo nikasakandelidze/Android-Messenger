@@ -20,14 +20,8 @@ import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CurrentWeather.newInstance] factory method to
- * create an instance of this fragment.
- */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 

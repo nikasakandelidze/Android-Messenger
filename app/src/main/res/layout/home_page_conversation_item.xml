@@ -39,4 +39,12 @@
         android:layout_weight="1"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/id_of_another_user"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textSize="18sp" />
+
 </LinearLayout>

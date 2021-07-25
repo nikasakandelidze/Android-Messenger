@@ -34,6 +34,7 @@ class HomePagePresenter(val view: IHomePageView) {
                                 "",
                                 conv.messages?.get(1)?.content.orEmpty(),
                                 conv.messages?.get(1)?.date.orEmpty(),
+                                idOfAnotherUser
                             )
                         )
                     }
