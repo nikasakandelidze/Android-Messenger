@@ -1,23 +1,21 @@
 package ge.nsakandelidze.customMessenger.view.searchPage
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.User
-import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.presenter.profile.UsersSearchPresenter
-import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
-import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 import ge.nsakandelidze.customMessenger.view.homepage.UsersSearchListAdapter
+import ge.nsakandelidze.customMessenger.view.profile.IUsersSearch
 
-class UsersSearchActivity : AppCompatActivity() {
+class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
 
     private lateinit var usersSearchListRecyclerView: RecyclerView
     private lateinit var presenter: UsersSearchPresenter
-    private var usersList : MutableList<User> = mutableListOf()
+    private var usersList : MutableList<User?> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +32,14 @@ class UsersSearchActivity : AppCompatActivity() {
     }
 
     private fun initState() {
-        this.presenter = UsersSearchPresenter()
+        this.presenter = UsersSearchPresenter(this)
         this.presenter.getAllUsers()
+    }
+
+    override fun updateUsersList(users: MutableList<User?>) {
+        usersList.clear()
+        Log.d("users", users.toString())
+        usersList.addAll(users)
+        usersSearchListRecyclerView.adapter?.notifyDataSetChanged()
     }
 }

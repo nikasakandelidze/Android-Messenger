@@ -3,6 +3,7 @@ package ge.nsakandelidze.customMessenger.view.signUp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
@@ -42,7 +43,9 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
             val profession: String = professionComponent.text.toString()
+            Log.d("signup", "ak vaaar")
             presenter.signUpNewUser(username, password, profession, {
+                Log.d("signup", "intentshi var")
                 val intent = Intent(this, MainPageContainerActivity::class.java)
                 startActivity(intent)
             }, {

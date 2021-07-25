@@ -17,6 +17,7 @@ class User {
         password: String? = null,
         profession: String? = null
     ) {
+        this.id = id
         this.nickname = nickname
         this.password = password
         this.profession = profession

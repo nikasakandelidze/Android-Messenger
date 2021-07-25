@@ -1,5 +1,6 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.User
 
-class UsersSearchListAdapter(val users: List<User>) :
+class UsersSearchListAdapter(val users: MutableList<User?>) :
     RecyclerView.Adapter<UserItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItem {
         val view = LayoutInflater.from(parent.context)
@@ -19,8 +20,9 @@ class UsersSearchListAdapter(val users: List<User>) :
 
     override fun onBindViewHolder(holder: UserItem, position: Int) {
         val userItem = users[position]
+        Log.d("usersInRecycleView", users.toString())
         holder.userImage.setImageResource(R.drawable.avatar_image_placeholder)
-        holder.userName.text = userItem.nickname
+        holder.userName.text = userItem!!.nickname
         holder.userProfession.text = userItem.profession
     }
 
