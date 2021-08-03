@@ -3,6 +3,7 @@ package ge.nsakandelidze.customMessenger.view.chat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ class ChatPage : AppCompatActivity(), IChatView {
     private lateinit var chatPresenter: ChatPresenter
     private lateinit var otherUserId: String
     private lateinit var messagesListRecyclerView: RecyclerView
-    private lateinit var messageChatText: TextInputEditText
+    private lateinit var messageChatText: EditText
     private lateinit var sendButton: Button
     private val messages: MutableList<Message> = mutableListOf()
 

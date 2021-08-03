@@ -9,38 +9,50 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/send_message_wrapper_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/send_message_wrapper_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/send_message_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/messages_recycler_view">
+        app:layout_constraintRight_toRightOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/message_input_id"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="5"
-            android:background="@drawable/border_background"
-            android:backgroundTint="@color/blue"
-            android:hint="Message" />
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/message"
+            android:inputType="text"
+            android:maxLines="6"
+            tools:ignore="Autofill"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="16dp" />
 
         <Button
             android:id="@+id/send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/transparent_button_shape"
-            android:backgroundTint="@color/white"
-            android:text="Send" />
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:backgroundTint="@color/black"
+            app:cornerRadius="50dp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

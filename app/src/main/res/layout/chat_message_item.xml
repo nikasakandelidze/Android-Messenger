@@ -7,7 +7,7 @@
     android:padding="30dp">
 
     <TextView
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:id="@+id/message_text"
         android:layout_weight="2"
         android:layout_width="0dp"
