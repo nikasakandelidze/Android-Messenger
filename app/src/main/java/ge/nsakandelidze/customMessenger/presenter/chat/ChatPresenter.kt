@@ -15,4 +15,15 @@ class ChatPresenter(val chatView: IChatView) {
         }
     }
 
+    fun sendNewMessage(message: String, otherUserId: String) {
+        if (message.isEmpty()) {
+            chatView.showMessageToUser("cant send empty message.")
+        } else {
+            val idOfUser = userStateStorage.getIdOfUser()
+            conversationStorage.addNewMessageIntoConversation(idOfUser, otherUserId, message) {
+                getConversationForUserWithIdOf(otherUserId)
+            }
+        }
+    }
+
 }

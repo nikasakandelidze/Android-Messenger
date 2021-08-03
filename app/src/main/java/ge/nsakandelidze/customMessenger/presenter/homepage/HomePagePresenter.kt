@@ -32,8 +32,8 @@ class HomePagePresenter(val view: IHomePageView) {
                             ConversationDto(
                                 user.nickname.orEmpty(),
                                 "",
-                                conv.messages?.get(1)?.content.orEmpty(),
-                                conv.messages?.get(1)?.date.orEmpty(),
+                                conv.messages?.values?.first()?.content.orEmpty(),
+                                conv.messages?.values?.first()?.date.orEmpty(),
                                 idOfAnotherUser
                             )
                         )
