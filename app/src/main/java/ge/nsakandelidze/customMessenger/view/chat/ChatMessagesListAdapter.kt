@@ -12,7 +12,7 @@ class ChatMessagesListAdapter(private val messages: MutableList<Message>) :
     RecyclerView.Adapter<MessageItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageItem {
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.chat_message_item, parent, false)
+            .inflate(R.layout.sent_message_item, parent, false)
         return MessageItem(view)
     }
 
