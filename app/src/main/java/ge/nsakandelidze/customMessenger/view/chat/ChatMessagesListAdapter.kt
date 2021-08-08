@@ -8,26 +8,70 @@ import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Message
 
-class ChatMessagesListAdapter(private val messages: MutableList<Message>) :
-    RecyclerView.Adapter<MessageItem>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageItem {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.sent_message_item, parent, false)
-        return MessageItem(view)
-    }
-
-    override fun onBindViewHolder(holder: MessageItem, position: Int) {
-        val messageItem = messages[position]
-        holder.messageContent.text = messageItem.content
-        holder.messageDate.text = messageItem.date
+class ChatMessagesListAdapter(private val messages: MutableList<Message>, private val user: String) :
+    RecyclerView.Adapter<ChatMessagesListAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view: View
+        return when(viewType){
+            TYPE_1 -> {
+                view = LayoutInflater.from(parent.context).inflate(R.layout.sent_message_item, parent,false)
+                VHHeader(view)
+            }
+            else -> {
+                view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.recieved_message_item, parent, false)
+                VHItem(view)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return messages.size
     }
-}
 
-class MessageItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val messageContent = itemView.findViewById<TextView>(R.id.message_text)
-    val messageDate = itemView.findViewById<TextView>(R.id.message_time)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var type = 0
+        type = if(messages[position].from.equals(user)) 1
+        else 2
+        when(type){
+            TYPE_1 ->{
+                val header = holder as VHHeader
+                messages[holder.layoutPosition].let { header.bindView(it) }
+            }
+            TYPE_2 ->{
+                val item = holder as VHItem
+                messages[holder.layoutPosition].let { item.bindView(it) }
+            }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        var type = 0
+        type = if(messages[position].from.equals(user)) 1
+        else 2
+
+        return type
+    }
+
+    open class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
+
+    inner class VHHeader(itemView: View): ViewHolder(itemView){
+        fun bindView(message: Message){
+            itemView.findViewById<TextView>(R.id.message_text).text = message.content
+            itemView.findViewById<TextView>(R.id.message_time).text = message.date
+        }
+    }
+
+    inner class VHItem(itemView: View): ViewHolder(itemView){
+
+        fun bindView(message: Message){
+            itemView.findViewById<TextView>(R.id.message_text).text = message.content
+            itemView.findViewById<TextView>(R.id.message_time).text = message.date
+        }
+    }
+
+    companion object {
+        val TYPE_1 = 1
+        val TYPE_2 = 2
+    }
 }

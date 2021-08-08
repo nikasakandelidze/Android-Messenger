@@ -12,6 +12,7 @@ import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.Message
 import ge.nsakandelidze.customMessenger.presenter.chat.ChatPresenter
+import ge.nsakandelidze.customMessenger.presenter.profile.ProfilePresenter
 import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 
 class ChatPage : AppCompatActivity(), IChatView {
@@ -26,8 +27,8 @@ class ChatPage : AppCompatActivity(), IChatView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         otherUserId = intent.getStringExtra("otherUserId")!!
-        initViewComponents()
         initializestate()
+        initViewComponents()
         initListeners()
     }
 
@@ -43,7 +44,7 @@ class ChatPage : AppCompatActivity(), IChatView {
         sendButton = findViewById(R.id.send_button)
         messageChatText = findViewById(R.id.message_input_id)
         messagesListRecyclerView.adapter =
-            ChatMessagesListAdapter(messages)
+            ChatMessagesListAdapter(messages, chatPresenter.getUserId())
         messagesListRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }

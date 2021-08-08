@@ -26,4 +26,8 @@ class ChatPresenter(val chatView: IChatView) {
         }
     }
 
+    fun getUserId(): String{
+        return userStateStorage.getIdOfUser()
+    }
+
 }
