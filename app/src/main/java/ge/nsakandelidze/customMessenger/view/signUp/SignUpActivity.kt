@@ -1,10 +1,13 @@
 package ge.nsakandelidze.customMessenger.view.signUp
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
@@ -16,6 +19,7 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
     private lateinit var usernameComponent: TextInputEditText
     private lateinit var passwordComponent: TextInputEditText
     private lateinit var professionComponent: TextInputEditText
+    private lateinit var progressBarLoder: ProgressBar
     private lateinit var signUpButton: Button
 
 
@@ -32,6 +36,7 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
         passwordComponent = findViewById(R.id.password)
         professionComponent = findViewById(R.id.what_i_do)
         signUpButton = findViewById<Button>(R.id.sign_up_button)
+        progressBarLoder = findViewById(R.id.loader_id)
     }
 
     private fun initializeListeners() {
@@ -43,13 +48,14 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
             val username: String = usernameComponent.text.toString()
             val password: String = passwordComponent.text.toString()
             val profession: String = professionComponent.text.toString()
-            Log.d("signup", "ak vaaar")
+            progressBarLoder.visibility = View.VISIBLE
             presenter.signUpNewUser(username, password, profession, {
-                Log.d("signup", "intentshi var")
+                progressBarLoder.visibility = View.GONE
                 val intent = Intent(this, MainPageContainerActivity::class.java)
                 startActivity(intent)
             }, {
                 Toast.makeText(this, "Failed to sign up", Toast.LENGTH_LONG).show()
+                progressBarLoder.visibility = View.GONE
             })
         }
     }
