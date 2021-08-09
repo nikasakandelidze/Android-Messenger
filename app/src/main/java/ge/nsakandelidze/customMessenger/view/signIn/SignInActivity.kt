@@ -28,6 +28,15 @@ class SignInActivity : AppCompatActivity(), ISignIn {
         setContentView(R.layout.activity_sign_in)
         initializeState()
         initializeListeners()
+        conditionalRedirectOfLoggedInUser()
+    }
+
+    private fun conditionalRedirectOfLoggedInUser(){
+        if(presenter.isUserSignedIn()){
+            finish()
+            val intent = Intent(this, MainPageContainerActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initializeListeners() {

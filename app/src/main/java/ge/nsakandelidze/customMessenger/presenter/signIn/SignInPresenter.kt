@@ -19,11 +19,16 @@ class SignInPresenter(val view: ISignIn) {
         val inputParametersValid = validator.isInputParametersValid(username, password)
         if (inputParametersValid) {
             userDataStorage.checkIfUserExist(username, password, {
-                    userStateStorage.signIn(it.id.orEmpty())
+                userStateStorage.signIn(it.id.orEmpty())
                 successCallback(Unit)
             }, failCallback)
         } else {
             view.showFailedSignInMessage("All three input parameters are mandatory to fill.")
         }
+    }
+
+    fun isUserSignedIn(): Boolean {
+        val idOfUser = userStateStorage.getIdOfUser()
+        return idOfUser.isNotEmpty()
     }
 }

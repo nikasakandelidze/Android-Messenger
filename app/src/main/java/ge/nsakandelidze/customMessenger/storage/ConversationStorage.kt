@@ -60,7 +60,7 @@ class ConversationStorage {
         otherUserId: String,
         consumer: (Conversation) -> Unit
     ) {
-        convsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        convsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val children = p0.children
                 val conversation = children

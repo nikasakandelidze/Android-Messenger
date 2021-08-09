@@ -38,7 +38,6 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
 
     override fun updateUsersList(users: MutableList<User?>) {
         usersList.clear()
-        Log.d("users", users.toString())
         usersList.addAll(users)
         usersSearchListRecyclerView.adapter?.notifyDataSetChanged()
     }
