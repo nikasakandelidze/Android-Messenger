@@ -36,7 +36,7 @@ class SignUpActivity : AppCompatActivity(), ISignUpView {
         passwordComponent = findViewById(R.id.password)
         professionComponent = findViewById(R.id.what_i_do)
         signUpButton = findViewById<Button>(R.id.sign_up_button)
-        progressBarLoder = findViewById(R.id.loader_id)
+        progressBarLoder = findViewById(R.id.loader_progress_bar)
     }
 
     private fun initializeListeners() {
