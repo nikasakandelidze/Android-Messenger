@@ -31,6 +31,12 @@ class SignInActivity : AppCompatActivity(), ISignIn {
         conditionalRedirectOfLoggedInUser()
     }
 
+    override fun onResume() {
+        super.onResume()
+        usernameComponent.text?.clear()
+        passwordComponent.text?.clear()
+    }
+
     private fun conditionalRedirectOfLoggedInUser(){
         if(presenter.isUserSignedIn()){
             finish()
