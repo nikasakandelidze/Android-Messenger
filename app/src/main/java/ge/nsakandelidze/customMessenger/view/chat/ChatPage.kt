@@ -54,10 +54,10 @@ class ChatPage : AppCompatActivity(), IChatView {
         chatPresenter.getConversationForUserWithIdOf(otherUserId)
     }
 
-    override fun showConversationDetails(conversation: Conversation) {
+    override fun showConversationDetails(conversation: Conversation?) {
         messages.clear()
         messages.addAll(
-            conversation.messages?.values!!.filterNotNull().toCollection(mutableListOf())
+            conversation?.messages?.values!!.filterNotNull().toCollection(mutableListOf())
         )
         messagesListRecyclerView.adapter?.notifyDataSetChanged()
     }

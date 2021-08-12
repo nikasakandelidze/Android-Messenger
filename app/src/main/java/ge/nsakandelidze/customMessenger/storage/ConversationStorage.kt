@@ -43,7 +43,7 @@ class ConversationStorage {
         message: String,
         successCallback: (Unit) -> Unit
     ) {
-        getConversationDetailsForUsers(fromUserId, toUserId) {
+        getSingleConversationDetailsForUsers(fromUserId, toUserId) {
             val messages = convsRef.child(it.getId()).child("messages")
             val push = messages.push()
             push.key?.let {
@@ -62,22 +62,7 @@ class ConversationStorage {
     ) {
         convsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                val children = p0.children
-                val conversation = children
-                    .filter {
-                        val value = it.getValue(Conversation::class.java)
-                        (value?.from_student_id.equals(loggedInUserId) && value?.to_student_id.equals(
-                            otherUserId
-                        ))
-                                || (value?.from_student_id.equals(otherUserId) && value?.to_student_id.equals(
-                            loggedInUserId
-                        ))
-                    }.mapNotNull {
-                        val value = it.getValue(Conversation::class.java)
-                        value?.setId(it.key!!)
-                        value
-                    }.first()
-                consumer(conversation)
+                processConversations(p0, loggedInUserId, otherUserId, consumer)
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -85,6 +70,44 @@ class ConversationStorage {
         })
     }
 
+    fun getSingleConversationDetailsForUsers(
+        loggedInUserId: String,
+        otherUserId: String,
+        consumer: (Conversation) -> Unit
+    ) {
+        convsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                processConversations(p0, loggedInUserId, otherUserId, consumer)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+    }
+
+    private fun processConversations(
+        p0: DataSnapshot,
+        loggedInUserId: String,
+        otherUserId: String,
+        consumer: (Conversation) -> Unit
+    ) {
+        val children = p0.children
+        val conversation = children
+            .filter {
+                val value = it.getValue(Conversation::class.java)
+                (value?.from_student_id.equals(loggedInUserId) && value?.to_student_id.equals(
+                    otherUserId
+                ))
+                        || (value?.from_student_id.equals(otherUserId) && value?.to_student_id.equals(
+                    loggedInUserId
+                ))
+            }.mapNotNull {
+                val value = it.getValue(Conversation::class.java)
+                value?.setId(it.key!!)
+                value
+            }.first()
+        consumer(conversation)
+    }
 
     companion object {
         private lateinit var INSTANCE: ConversationStorage
