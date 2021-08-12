@@ -1,5 +1,6 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,21 +10,34 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.User
+import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 
 class UsersSearchListAdapter(val users: MutableList<User?>) :
     RecyclerView.Adapter<UserItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItem {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.search_user_item, parent, false)
+        initializeClickListener(view)
         return UserItem(view)
+    }
+
+    private fun initializeClickListener(view: View) {
+        view.setOnClickListener {
+            val chatIntent = Intent(view.context, ChatPage::class.java).putExtra(
+                "otherUserId",
+                view.findViewById<TextView>(R.id.id_of_another_user).text
+            )
+            view.context.startActivity(chatIntent)
+        }
     }
 
     override fun onBindViewHolder(holder: UserItem, position: Int) {
         val userItem = users[position]
-        Log.d("usersInRecycleView", users.toString())
         holder.userImage.setImageResource(R.drawable.avatar_image_placeholder)
         holder.userName.text = userItem!!.nickname
         holder.userProfession.text = userItem.profession
+        holder.otherUserId.text = userItem.id
+
     }
 
     override fun getItemCount(): Int {
@@ -35,4 +49,5 @@ class UserItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val userImage = itemView.findViewById<ImageView>(R.id.user_image)
     val userName = itemView.findViewById<TextView>(R.id.user_name)
     val userProfession = itemView.findViewById<TextView>(R.id.user_profession)
+    val otherUserId = itemView.findViewById<TextView>(R.id.id_of_another_user)
 }

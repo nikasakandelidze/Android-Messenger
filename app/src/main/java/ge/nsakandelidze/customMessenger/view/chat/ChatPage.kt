@@ -56,10 +56,12 @@ class ChatPage : AppCompatActivity(), IChatView {
 
     override fun showConversationDetails(conversation: Conversation?) {
         messages.clear()
-        messages.addAll(
-            conversation?.messages?.values!!.filterNotNull().toCollection(mutableListOf())
-        )
-        messagesListRecyclerView.adapter?.notifyDataSetChanged()
+        if(conversation?.messages != null){
+            messages.addAll(
+                conversation.messages?.values!!.filterNotNull().toCollection(mutableListOf())
+            )
+            messagesListRecyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun showMessageToUser(message: String) {

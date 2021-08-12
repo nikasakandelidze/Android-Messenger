@@ -1,11 +1,15 @@
 package ge.nsakandelidze.customMessenger.storage
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.Message
+import java.time.LocalDateTime
+import java.util.*
 
 class ConversationStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
@@ -16,7 +20,7 @@ class ConversationStorage {
         idOfUser: String,
         consumer: (MutableList<Conversation>) -> Unit
     ) {
-        convsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        convsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 val children = p0.children
                 val toCollection = children
@@ -37,6 +41,7 @@ class ConversationStorage {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addNewMessageIntoConversation(
         fromUserId: String,
         toUserId: String,
@@ -44,11 +49,24 @@ class ConversationStorage {
         successCallback: (Unit) -> Unit
     ) {
         getSingleConversationDetailsForUsers(fromUserId, toUserId) {
-            val messages = convsRef.child(it.getId()).child("messages")
-            val push = messages.push()
-            push.key?.let {
-                messages.child(it).setValue(Message(message, "", fromUserId, toUserId))
-                successCallback(Unit)
+            if (it == null) {
+                val key = convsRef.push().key
+                key?.let {
+                    convsRef.child(key).setValue(Conversation(fromUserId, toUserId, mapOf()))
+                    val childComponent = convsRef.child(key).child("messages")
+                    childComponent.push().key?.let {
+                        childComponent.child(it)
+                            .setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
+                    }
+
+                }
+            } else {
+                val messages = it?.let { it1 -> convsRef.child(it1.getId().orEmpty()).child("messages") }
+                val push = messages?.push()
+                push?.key?.let {
+                    messages.child(it).setValue(Message(message, "", fromUserId, toUserId))
+                    successCallback(Unit)
+                }
             }
         }
 
@@ -58,7 +76,7 @@ class ConversationStorage {
     fun getConversationDetailsForUsers(
         loggedInUserId: String,
         otherUserId: String,
-        consumer: (Conversation) -> Unit
+        consumer: (Conversation?) -> Unit
     ) {
         convsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
@@ -73,7 +91,7 @@ class ConversationStorage {
     fun getSingleConversationDetailsForUsers(
         loggedInUserId: String,
         otherUserId: String,
-        consumer: (Conversation) -> Unit
+        consumer: (Conversation?) -> Unit
     ) {
         convsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
@@ -89,7 +107,7 @@ class ConversationStorage {
         p0: DataSnapshot,
         loggedInUserId: String,
         otherUserId: String,
-        consumer: (Conversation) -> Unit
+        consumer: (Conversation?) -> Unit
     ) {
         val children = p0.children
         val conversation = children
@@ -105,7 +123,7 @@ class ConversationStorage {
                 val value = it.getValue(Conversation::class.java)
                 value?.setId(it.key!!)
                 value
-            }.first()
+            }.firstOrNull()
         consumer(conversation)
     }
 
