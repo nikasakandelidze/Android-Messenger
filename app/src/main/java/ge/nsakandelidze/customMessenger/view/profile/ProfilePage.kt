@@ -1,11 +1,16 @@
 package ge.nsakandelidze.customMessenger.view.profile
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
@@ -18,7 +23,9 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
     private lateinit var professionEditText: TextInputEditText
     private lateinit var updateButton: Button
     private lateinit var signOutButton: Button
+    private lateinit var image: ImageView
     private lateinit var profilePresenter: ProfilePresenter
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +42,10 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         initListeners()
         this.profilePresenter = ProfilePresenter(this)
         this.profilePresenter.getUserData()
+        progressBar.visibility = View.VISIBLE
+        this.profilePresenter.getImageForUser{
+            progressBar.visibility = View.GONE
+        }
     }
 
     private fun initViewComponents(view: View) {
@@ -42,6 +53,8 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         professionEditText = view.findViewById(R.id.profession)
         updateButton = view.findViewById(R.id.update_button)
         signOutButton = view.findViewById(R.id.sign_out_button)
+        image = view.findViewById(R.id.profile_pic)
+        progressBar = view.findViewById(R.id.loader_progress_bar)
     }
 
     private fun initListeners() {
@@ -52,6 +65,24 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         }
         signOutButton.setOnClickListener {
             profilePresenter.signOut()
+        }
+        image.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_GET_CONTENT;
+            intent.type = "image/*";
+            startActivityForResult(intent, 200)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 200) {
+            val stream = data?.data?.let { context?.contentResolver?.openInputStream(it) }
+            if (stream != null) {
+                profilePresenter.updateImage(stream)
+            }
+        } else {
+            Toast.makeText(context, "Faield to choose image", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -68,5 +99,10 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         // redirect to another activity
         val intent = Intent(activity, SignInActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun showImage(byteArray: ByteArray) {
+        val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size);
+        image.setImageBitmap(bitmap)
     }
 }
