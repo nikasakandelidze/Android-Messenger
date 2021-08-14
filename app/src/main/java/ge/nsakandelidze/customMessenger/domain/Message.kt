@@ -15,7 +15,7 @@ class Message {
         to: String? = null
     ) {
         this.content = content
-        this.date = date;
+        this.date = date
         this.from = from
         this.to = to
     }

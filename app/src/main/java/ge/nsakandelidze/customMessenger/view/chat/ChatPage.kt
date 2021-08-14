@@ -1,14 +1,18 @@
 package ge.nsakandelidze.customMessenger.view.chat
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.Message
 import ge.nsakandelidze.customMessenger.presenter.chat.ChatPresenter
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ChatPage : AppCompatActivity(), IChatView {
     private lateinit var chatPresenter: ChatPresenter
@@ -59,11 +63,14 @@ class ChatPage : AppCompatActivity(), IChatView {
         chatPresenter.getConversationForUserWithIdOf(otherUserId)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun showConversationDetails(conversation: Conversation?) {
         messages.clear()
         if(conversation?.messages != null){
             messages.addAll(
-                conversation.messages?.values!!.filterNotNull().toCollection(mutableListOf())
+                conversation.messages?.values!!.filterNotNull()
+                    .toCollection(mutableListOf())
+                    .sortedBy {LocalDateTime.parse(it.date,DateTimeFormatter.ISO_LOCAL_DATE_TIME)}
             )
             messagesListRecyclerView.adapter?.notifyDataSetChanged()
         }

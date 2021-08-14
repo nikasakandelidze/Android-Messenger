@@ -14,6 +14,7 @@ class ChatPresenter(val chatView: IChatView) {
     fun getConversationForUserWithIdOf(otherUserId: String) {
         val idOfUser = userStateStorage.getIdOfUser()
         conversationStorage.getConversationDetailsForUsers(idOfUser, otherUserId) {
+
             chatView.showConversationDetails(it)
         }
     }

@@ -9,7 +9,6 @@ import com.google.firebase.database.ValueEventListener
 import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.Message
 import java.time.LocalDateTime
-import java.util.*
 
 class ConversationStorage {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance();
@@ -64,7 +63,7 @@ class ConversationStorage {
                 val messages = it?.let { it1 -> convsRef.child(it1.getId().orEmpty()).child("messages") }
                 val push = messages?.push()
                 push?.key?.let {
-                    messages.child(it).setValue(Message(message, "", fromUserId, toUserId))
+                    messages.child(it).setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
                     successCallback(Unit)
                 }
             }
@@ -124,6 +123,7 @@ class ConversationStorage {
                 value?.setId(it.key!!)
                 value
             }.firstOrNull()
+        var messages = conversation?.messages
         consumer(conversation)
     }
 
