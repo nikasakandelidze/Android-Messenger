@@ -28,13 +28,14 @@ class HomePagePresenter(val view: IHomePageView) {
                     } else {
                         idOfAnotherUser = fromStudentId.toString()
                     }
+                    val lastConvo = conv.messages?.values?.sortedBy { it.date }?.last()
                     userDataStorage.getUserDataWithIdOf(idOfAnotherUser) { user ->
                         view.AddNewConversationAndupdateConversationsList(
                             ConversationDto(
                                 user.nickname.orEmpty(),
                                 "",
-                                conv.messages?.values?.first()?.content.orEmpty(),
-                                conv.messages?.values?.first()?.date.orEmpty(),
+                                lastConvo?.content.orEmpty(),
+                                lastConvo?.date.orEmpty(),
                                 idOfAnotherUser
                             ), ls.size, counter++
                         )
