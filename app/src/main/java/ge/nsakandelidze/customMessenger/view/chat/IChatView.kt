@@ -6,4 +6,5 @@ import ge.nsakandelidze.customMessenger.domain.User
 interface IChatView {
     fun showConversationDetails(conversation: Conversation?)
     fun showMessageToUser(message: String)
+    fun showFriendInfo(nickname: String, profession: String)
 }

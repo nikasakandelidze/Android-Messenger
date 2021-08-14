@@ -2,18 +2,13 @@ package ge.nsakandelidze.customMessenger.view.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Conversation
 import ge.nsakandelidze.customMessenger.domain.Message
 import ge.nsakandelidze.customMessenger.presenter.chat.ChatPresenter
-import ge.nsakandelidze.customMessenger.presenter.profile.ProfilePresenter
-import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 
 class ChatPage : AppCompatActivity(), IChatView {
     private lateinit var chatPresenter: ChatPresenter
@@ -21,14 +16,19 @@ class ChatPage : AppCompatActivity(), IChatView {
     private lateinit var messagesListRecyclerView: RecyclerView
     private lateinit var messageChatText: EditText
     private lateinit var sendButton: Button
+    private lateinit var userPicture: ImageView
+    private lateinit var userName: TextView
+    private lateinit var userProfession: TextView
+
     private val messages: MutableList<Message> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         otherUserId = intent.getStringExtra("otherUserId")!!
-        initializestate()
+        initializeState()
         initViewComponents()
+        chatPresenter.getFriendInfo(otherUserId)
         initListeners()
     }
 
@@ -40,7 +40,12 @@ class ChatPage : AppCompatActivity(), IChatView {
     }
 
     private fun initViewComponents() {
-        messagesListRecyclerView = findViewById<RecyclerView>(R.id.messages_recycler_view)
+        messagesListRecyclerView = findViewById(R.id.messages_recycler_view)
+
+        userName = findViewById(R.id.friend_name)
+        userPicture = findViewById(R.id.friend_image)
+        userProfession = findViewById(R.id.friend_profession)
+
         sendButton = findViewById(R.id.send_button)
         messageChatText = findViewById(R.id.message_input_id)
         messagesListRecyclerView.adapter =
@@ -49,7 +54,7 @@ class ChatPage : AppCompatActivity(), IChatView {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
-    private fun initializestate() {
+    private fun initializeState() {
         chatPresenter = ChatPresenter(this)
         chatPresenter.getConversationForUserWithIdOf(otherUserId)
     }
@@ -68,5 +73,11 @@ class ChatPage : AppCompatActivity(), IChatView {
         runOnUiThread {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun showFriendInfo(nickname: String, profession: String) {
+        userName.text = nickname
+        userProfession.text = profession
+        userPicture.setImageResource(R.drawable.avatar_image_placeholder)
     }
 }

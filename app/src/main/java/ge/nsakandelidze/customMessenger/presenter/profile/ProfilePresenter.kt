@@ -1,5 +1,6 @@
 package ge.nsakandelidze.customMessenger.presenter.profile
 
+import ge.nsakandelidze.customMessenger.domain.User
 import ge.nsakandelidze.customMessenger.presenter.profile.validator.ProfileValidator
 import ge.nsakandelidze.customMessenger.storage.UserDataStorage
 import ge.nsakandelidze.customMessenger.storage.UserStateStorage
