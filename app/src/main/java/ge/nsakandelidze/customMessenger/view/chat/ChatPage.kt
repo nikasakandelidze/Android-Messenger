@@ -23,6 +23,7 @@ class ChatPage : AppCompatActivity(), IChatView {
     private lateinit var userPicture: ImageView
     private lateinit var userName: TextView
     private lateinit var userProfession: TextView
+    private lateinit var backButton: ImageView
 
     private val messages: MutableList<Message> = mutableListOf()
 
@@ -40,6 +41,8 @@ class ChatPage : AppCompatActivity(), IChatView {
         sendButton.setOnClickListener {
             val text = messageChatText.text
             chatPresenter.sendNewMessage(text.toString(), otherUserId)
+            messageChatText.setText("")
+            messagesListRecyclerView.scrollToPosition(messages.size - 1)
         }
     }
 
@@ -54,8 +57,14 @@ class ChatPage : AppCompatActivity(), IChatView {
         messageChatText = findViewById(R.id.message_input_id)
         messagesListRecyclerView.adapter =
             ChatMessagesListAdapter(messages, chatPresenter.getUserId())
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        linearLayoutManager.stackFromEnd = true
         messagesListRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            linearLayoutManager
+        backButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun initializeState() {
@@ -66,12 +75,18 @@ class ChatPage : AppCompatActivity(), IChatView {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun showConversationDetails(conversation: Conversation?) {
         messages.clear()
-        if(conversation?.messages != null){
+        if (conversation?.messages != null) {
             messages.addAll(
                 conversation.messages?.values!!.filterNotNull()
                     .toCollection(mutableListOf())
-                    .sortedBy {LocalDateTime.parse(it.date,DateTimeFormatter.ISO_LOCAL_DATE_TIME)}
+                    .sortedBy {
+                        LocalDateTime.parse(
+                            it.date,
+                            DateTimeFormatter.ISO_LOCAL_DATE_TIME
+                        )
+                    }
             )
+            messagesListRecyclerView.scrollToPosition(messages.size - 1)
             messagesListRecyclerView.adapter?.notifyDataSetChanged()
         }
     }

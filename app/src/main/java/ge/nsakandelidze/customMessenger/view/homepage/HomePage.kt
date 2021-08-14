@@ -13,6 +13,8 @@ import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
+import java.util.stream.Collector
+import java.util.stream.Collectors
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -82,8 +84,14 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         conversationsListRecyclerView.adapter?.notifyDataSetChanged()
     }
 
-    override fun AddNewConversationAndupdateConversationsList(conversation: ConversationDto) {
+    override fun AddNewConversationAndupdateConversationsList(
+        conversation: ConversationDto,
+        length: Int,
+        counter: Int
+    ) {
         listOfConversations.add(conversation)
-        conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        if (counter == length - 1) {
+            conversationsListRecyclerView.adapter?.notifyItemInserted(listOfConversations.size-1)
+        }
     }
 }

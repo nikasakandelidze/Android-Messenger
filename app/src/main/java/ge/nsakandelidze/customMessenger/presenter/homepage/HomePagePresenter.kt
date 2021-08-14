@@ -17,6 +17,7 @@ class HomePagePresenter(val view: IHomePageView) {
         if (idOfUser.isEmpty()) {
             view.notifyUser("You are not logged in")
         } else {
+            var counter = 0
             conversationStorage.fetchAllConversationsForUser(idOfUser) { ls ->
                 ls.forEach { conv ->
                     val fromStudentId = conv.from_student_id
@@ -35,7 +36,7 @@ class HomePagePresenter(val view: IHomePageView) {
                                 conv.messages?.values?.first()?.content.orEmpty(),
                                 conv.messages?.values?.first()?.date.orEmpty(),
                                 idOfAnotherUser
-                            )
+                            ), ls.size, counter++
                         )
                     }
                 }
