@@ -1,12 +1,20 @@
 package ge.nsakandelidze.customMessenger.view.chat
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.Message
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ISO_LOCAL_TIME
+import java.time.format.FormatStyle
+
 
 class ChatMessagesListAdapter(private val messages: MutableList<Message>, private val user: String) :
     RecyclerView.Adapter<ChatMessagesListAdapter.ViewHolder>() {
@@ -56,17 +64,29 @@ class ChatMessagesListAdapter(private val messages: MutableList<Message>, privat
     open class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
 
     inner class VHHeader(itemView: View): ViewHolder(itemView){
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bindView(message: Message){
             itemView.findViewById<TextView>(R.id.message_text).text = message.content
-            itemView.findViewById<TextView>(R.id.message_time).text = message.date
+            itemView.findViewById<TextView>(R.id.message_time).text = dateFormatter(message.date!!)
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun dateFormatter(messageDate: String): String{
+        val date = LocalDateTime.parse(messageDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+        val month = date.month.toString().substring(0,3)
+        val day = date.dayOfMonth.toString()
+        val time = date.hour.toString() + ":" + date.minute.toString()
+        return "$day $month $time"
     }
 
     inner class VHItem(itemView: View): ViewHolder(itemView){
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bindView(message: Message){
             itemView.findViewById<TextView>(R.id.message_text).text = message.content
-            itemView.findViewById<TextView>(R.id.message_time).text = message.date
+            itemView.findViewById<TextView>(R.id.message_time).text = dateFormatter(message.date!!)
         }
     }
 
