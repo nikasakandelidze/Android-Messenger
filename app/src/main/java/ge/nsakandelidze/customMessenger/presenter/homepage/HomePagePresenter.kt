@@ -23,6 +23,7 @@ class HomePagePresenter(val view: IHomePageView) {
         } else {
             var counter = 0
             conversationStorage.fetchAllConversationsForUser(idOfUser) { ls ->
+                view.clearRecycleView()
                 ls.forEach { conv ->
                     val fromStudentId = conv.from_student_id
                     val toStudentId = conv.to_student_id

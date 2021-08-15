@@ -66,7 +66,9 @@ class ConversationStorage {
                 val messages = it?.let { it1 -> convsRef.child(it1.getId().orEmpty()).child("messages") }
                 val push = messages?.push()
                 push?.key?.let {
-                    messages.child(it).setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        messages.child(it).setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
+                    }
                     successCallback(Unit)
                 }
             }
