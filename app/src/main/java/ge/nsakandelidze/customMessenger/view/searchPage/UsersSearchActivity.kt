@@ -1,17 +1,13 @@
 package ge.nsakandelidze.customMessenger.view.searchPage
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.User
 import ge.nsakandelidze.customMessenger.presenter.profile.UsersSearchPresenter
@@ -24,6 +20,7 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
     private lateinit var presenter: UsersSearchPresenter
     private lateinit var progressBar: ProgressBar
     private lateinit var searchBar: TextInputEditText
+    private lateinit var backButton: ImageView
 
     private var usersList: MutableList<User?> = mutableListOf()
 
@@ -34,10 +31,22 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
         initViewComponents()
     }
 
+    private val MIN_CHAR_NUMBER = 3
+
     private fun initViewComponents() {
+        backButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
         searchBar = findViewById(R.id.username)
         searchBar.doOnTextChanged { text, start, count, after ->
-            presenter.getUsersBySearchInput(text.toString())
+            if (text.isNullOrEmpty()) {
+                presenter.getUsersBySearchInput("")
+            } else {
+                if (text.length >= MIN_CHAR_NUMBER) {
+                    presenter.getUsersBySearchInput(text.toString())
+                }
+            }
         }
         usersSearchListRecyclerView = findViewById<RecyclerView>(R.id.users_list)
         progressBar = findViewById(R.id.loader_progress_bar)

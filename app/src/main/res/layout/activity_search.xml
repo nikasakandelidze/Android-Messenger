@@ -8,42 +8,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_top_toolbar"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:src="@drawable/back_button"
+                app:tint="@color/white" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_input_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="bottom">
+                android:hint="@string/search"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                app:boxStrokeWidth="0dp">
 
-
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/username_input_layout"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="250dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginLeft="70dp"
-                    android:hint="@string/search"
-                    app:boxStrokeWidth="0dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/username"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/input_text_shape" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
+                    android:background="@drawable/input_text_shape" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -63,17 +56,16 @@
 
     <ProgressBar
         android:id="@+id/loader_progress_bar"
-        android:layout_marginTop="150dp"
         style="?android:attr/progressBarStyle"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="150dp"
+        android:layout_marginTop="150dp"
+        android:background="@color/blue"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/blue"
-        android:visibility="gone"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

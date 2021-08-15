@@ -3,21 +3,19 @@ package ge.nsakandelidze.customMessenger.view.homepage
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter.*
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME
 import java.time.temporal.ChronoUnit
 
 
@@ -39,17 +37,15 @@ class HomePageListAdapter(
     override fun onBindViewHolder(holder: ConversationItem, position: Int) {
         progressBar.visibility = View.VISIBLE
         val conversationItem = conversations[position]
-        homePagePresenter.getImageForUser( conversationItem.idOfAnotherUser,{
+        homePagePresenter.getImageForUser(conversationItem.idOfAnotherUser, {
             holder.conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
-            if(position == conversations.size-1){
-                progressBar.visibility = View.GONE
-            }
+            progressBar.visibility = View.GONE
         }, {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
                 holder.conversationImage.setImageBitmap(bitmap)
             }
-            if(position == conversations.size-1){
+            if (position == conversations.size - 1) {
                 progressBar.visibility = View.GONE
             }
         })
@@ -87,15 +83,15 @@ class HomePageListAdapter(
         val minutes = tempDateTime.until(now, ChronoUnit.MINUTES)
         tempDateTime = tempDateTime.plusMinutes(minutes)
 
-        val month = past.month.toString().substring(0,3)
+        val month = past.month.toString().substring(0, 3)
         val day = past.dayOfMonth.toString()
 
         return when {
             years == 0L && months == 0L && days == 0L && hours == 0L && minutes in 0..59 -> {
-                "$minutes minutes ago"
+                "$minutes min"
             }
             years == 0L && months == 0L && days == 0L && hours in 0..24 -> {
-                "$hours hours ago"
+                "$hours hour"
             }
             else -> "$day $month"
         }
