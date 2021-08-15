@@ -45,9 +45,9 @@ class ProfilePresenter(val view: IProfile) {
         view.redirectToView("bla")
     }
 
-    fun updateImage(stream: InputStream) {
+    fun updateImage(stream: InputStream, callback: (Unit) -> Unit, failureCallback: (Unit) -> Unit) {
         val userId = userStateStorage.getIdOfUser()
-        imageStorage.uploadImage(stream, userId)
+        imageStorage.uploadImage(stream, userId, callback, failureCallback)
     }
 
     fun getImageForUser(failureConsumer: (String) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
