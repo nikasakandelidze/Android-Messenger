@@ -43,6 +43,7 @@ class UsersSearchListAdapter(
         progressBar.visibility = View.VISIBLE
         userItem?.id?.let {
             presenter.getImageForUser(it, {
+                progressBar.visibility = View.GONE
                 holder.userImage.setImageResource(R.drawable.avatar_image_placeholder)
             }, { b ->
                 if (position == users.size - 1) {
