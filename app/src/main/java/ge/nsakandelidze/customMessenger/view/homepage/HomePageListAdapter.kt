@@ -88,10 +88,10 @@ class HomePageListAdapter(
 
         return when {
             years == 0L && months == 0L && days == 0L && hours == 0L && minutes in 0..59 -> {
-                "$minutes minutes ago"
+                "$minutes min"
             }
             years == 0L && months == 0L && days == 0L && hours in 0..24 -> {
-                "$hours hours ago"
+                "$hours hour"
             }
             else -> "$day $month"
         }
