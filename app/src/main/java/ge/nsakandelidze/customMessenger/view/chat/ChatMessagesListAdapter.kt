@@ -37,6 +37,7 @@ class ChatMessagesListAdapter(private val messages: MutableList<Message>, privat
         return messages.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var type = 0
         type = if(messages[position].from.equals(user)) 1
