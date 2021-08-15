@@ -66,7 +66,9 @@ class ChatPage : AppCompatActivity(), IChatView {
         backButton.setOnClickListener {
             onBackPressed()
         }
-        chatPresenter.getImageForUserWithId(otherUserId, {showMessageToUser(it)}, {
+        chatPresenter.getImageForUserWithId(otherUserId, {
+            userPicture.setImageResource(R.drawable.avatar_image_placeholder)
+            showMessageToUser(it)}, {
             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
             userPicture.setImageBitmap(bitmap)
         })

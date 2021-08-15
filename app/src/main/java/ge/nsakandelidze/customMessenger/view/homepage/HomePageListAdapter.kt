@@ -15,9 +15,9 @@ import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
 class HomePageListAdapter(
-    val conversations: List<ConversationDto>,
-    val homePagePresenter: HomePagePresenter,
-    val progressBar: ProgressBar
+    private val conversations: List<ConversationDto>,
+    private val homePagePresenter: HomePagePresenter,
+    private val progressBar: ProgressBar
 ) :
     RecyclerView.Adapter<ConversationItem>() {
 
@@ -30,15 +30,19 @@ class HomePageListAdapter(
     }
 
     override fun onBindViewHolder(holder: ConversationItem, position: Int) {
-        val conversationItem = conversations[position]
         progressBar.visibility = View.VISIBLE
+        val conversationItem = conversations[position]
         homePagePresenter.getImageForUser( conversationItem.idOfAnotherUser,{
             holder.conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
-            progressBar.visibility = View.GONE
+            if(position == conversations.size-1){
+                progressBar.visibility = View.GONE
+            }
         }, {
             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
             holder.conversationImage.setImageBitmap(bitmap)
-            progressBar.visibility = View.GONE
+            if(position == conversations.size-1){
+                progressBar.visibility = View.GONE
+            }
         })
         holder.conversationPersonName.text = conversationItem.nickname
         holder.lastMessageOfConversation.text = conversationItem.lastSentMessage

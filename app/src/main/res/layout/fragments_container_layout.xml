@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/design_default_color_primary"
             android:contentDescription="@string/app_name"
-            app:layout_anchor="@id/bottomAppbar" />
+            app:layout_anchor="@id/bottomAppbar"
+            android:src="@drawable/plus"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>
