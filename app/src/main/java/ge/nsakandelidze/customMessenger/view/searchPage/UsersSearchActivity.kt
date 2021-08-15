@@ -2,6 +2,7 @@ package ge.nsakandelidze.customMessenger.view.searchPage
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,18 +16,20 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
 
     private lateinit var usersSearchListRecyclerView: RecyclerView
     private lateinit var presenter: UsersSearchPresenter
+    private lateinit var progressBar: ProgressBar
     private var usersList : MutableList<User?> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        initViewComponents()
         initState()
+        initViewComponents()
     }
 
     private fun initViewComponents(){
         usersSearchListRecyclerView = findViewById<RecyclerView>(R.id.users_list)
-        usersSearchListRecyclerView.adapter = UsersSearchListAdapter(usersList)
+        progressBar = findViewById(R.id.loader_progress_bar)
+        usersSearchListRecyclerView.adapter = UsersSearchListAdapter(usersList, presenter, progressBar)
         usersSearchListRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }

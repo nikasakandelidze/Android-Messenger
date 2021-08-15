@@ -1,18 +1,25 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.domain.User
+import ge.nsakandelidze.customMessenger.presenter.profile.UsersSearchPresenter
 import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 
-class UsersSearchListAdapter(val users: MutableList<User?>) :
+class UsersSearchListAdapter(
+    val users: MutableList<User?>,
+    val presenter: UsersSearchPresenter,
+    val progressBar: ProgressBar
+) :
     RecyclerView.Adapter<UserItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItem {
         val view = LayoutInflater.from(parent.context)
@@ -33,7 +40,18 @@ class UsersSearchListAdapter(val users: MutableList<User?>) :
 
     override fun onBindViewHolder(holder: UserItem, position: Int) {
         val userItem = users[position]
-        holder.userImage.setImageResource(R.drawable.avatar_image_placeholder)
+        progressBar.visibility = View.VISIBLE
+        userItem?.id?.let {
+            presenter.getImageForUser(it, {
+                holder.userImage.setImageResource(R.drawable.avatar_image_placeholder)
+            }, { b ->
+                if (position == users.size - 1) {
+                    progressBar.visibility = View.GONE
+                }
+                val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size);
+                holder.userImage.setImageBitmap(bitmap)
+            })
+        }
         holder.userName.text = userItem!!.nickname
         holder.userProfession.text = userItem.profession
         holder.otherUserId.text = userItem.id

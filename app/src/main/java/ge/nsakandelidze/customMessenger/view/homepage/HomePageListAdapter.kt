@@ -38,8 +38,10 @@ class HomePageListAdapter(
                 progressBar.visibility = View.GONE
             }
         }, {
-            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
-            holder.conversationImage.setImageBitmap(bitmap)
+            if(it.isNotEmpty()){
+                val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
+                holder.conversationImage.setImageBitmap(bitmap)
+            }
             if(position == conversations.size-1){
                 progressBar.visibility = View.GONE
             }

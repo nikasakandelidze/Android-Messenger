@@ -2,6 +2,7 @@ package ge.nsakandelidze.customMessenger.storage
 
 import com.google.firebase.storage.FirebaseStorage
 import java.io.InputStream
+import java.lang.Exception
 
 class ImagesStorage {
     private val storage: FirebaseStorage = FirebaseStorage.getInstance();
@@ -24,9 +25,27 @@ class ImagesStorage {
         sucessConsumer: (ByteArray) -> Unit,
         failureConsumer: (String) -> Unit
     ) {
-        reference.child(userId).getBytes(5000000)
-            .addOnSuccessListener { sucessConsumer(it) }
-            .addOnFailureListener { failureConsumer(it.localizedMessage) }
+        reference.listAll().addOnSuccessListener {
+            if (it.items.map { e -> e.name }.toCollection(mutableListOf()).contains(userId)) {
+                reference.child(userId).getBytes(5000000)
+                    .addOnSuccessListener {
+                        try {
+                            sucessConsumer(it)
+                        } catch (e: Exception) {
+                        }
+                    }
+                    .addOnFailureListener {
+                        try {
+                            failureConsumer(it.localizedMessage)
+                        } catch (e: Exception) {
+                        }
+                    }
+            } else {
+                failureConsumer("Couldnt find image for userId: " + userId)
+            }
+        }.addOnFailureListener {
+            failureConsumer("Couldnt find image for userId: " + userId)
+        }
     }
 
     companion object {
