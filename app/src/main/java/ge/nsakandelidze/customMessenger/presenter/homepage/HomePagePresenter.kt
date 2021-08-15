@@ -24,6 +24,7 @@ class HomePagePresenter(val view: IHomePageView) {
             var counter = 0
             conversationStorage.fetchAllConversationsForUser(idOfUser) { ls ->
                 view.clearRecycleView()
+                ls.sortByDescending { conv -> conv.messages?.values?.sortedBy { it.date }?.last()?.date }
                 ls.forEach { conv ->
                     val fromStudentId = conv.from_student_id
                     val toStudentId = conv.to_student_id
