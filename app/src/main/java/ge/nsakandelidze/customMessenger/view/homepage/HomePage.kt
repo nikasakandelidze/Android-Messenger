@@ -71,10 +71,12 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         searchBar.doOnTextChanged { text, start, before, count ->
             if (text.isNullOrEmpty()) {
-                presenter.fetchConversationForCurrentUser("")
+                Timer("SettingUp", false).schedule(600) {
+                    presenter.fetchConversationForCurrentUser("")
+                }
             } else {
                 if (text.length >= MIN_CHAR_NUMBER) {
-                    Timer("SettingUp", false).schedule(500) {
+                    Timer("SettingUp", false).schedule(600) {
                         presenter.fetchConversationForCurrentUser(text.toString())
                     }
                 }
