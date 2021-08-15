@@ -76,9 +76,12 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         }
     }
 
+    private var onCreate: Boolean = false
+
     private fun initState() {
         this.presenter = HomePagePresenter(this)
         this.presenter.fetchConversationForCurrentUser("")
+        onCreate = true
     }
 
     companion object {
@@ -100,6 +103,16 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         listOfConversations.clear()
         listOfConversations.addAll(conversations)
         conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listOfConversations.clear()
+        conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+        if (!onCreate) {
+            this.presenter.fetchConversationForCurrentUser("")
+        }
+        onCreate = false
     }
 
     override fun AddNewConversationAndupdateConversationsList(
