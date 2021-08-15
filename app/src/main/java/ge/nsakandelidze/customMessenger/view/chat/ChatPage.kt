@@ -1,5 +1,6 @@
 package ge.nsakandelidze.customMessenger.view.chat
 
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -65,6 +66,10 @@ class ChatPage : AppCompatActivity(), IChatView {
         backButton.setOnClickListener {
             onBackPressed()
         }
+        chatPresenter.getImageForUserWithId(otherUserId, {showMessageToUser(it)}, {
+            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
+            userPicture.setImageBitmap(bitmap)
+        })
     }
 
     private fun initializeState() {
@@ -100,6 +105,5 @@ class ChatPage : AppCompatActivity(), IChatView {
     override fun showFriendInfo(nickname: String, profession: String) {
         userName.text = nickname
         userProfession.text = profession
-        userPicture.setImageResource(R.drawable.avatar_image_placeholder)
     }
 }

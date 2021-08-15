@@ -40,7 +40,6 @@ class ConversationStorage {
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun addNewMessageIntoConversation(
         fromUserId: String,
         toUserId: String,
@@ -54,8 +53,12 @@ class ConversationStorage {
                     convsRef.child(key).setValue(Conversation(fromUserId, toUserId, mapOf()))
                     val childComponent = convsRef.child(key).child("messages")
                     childComponent.push().key?.let {
-                        childComponent.child(it)
-                            .setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            childComponent.child(it)
+                                .setValue(Message(message, LocalDateTime.now().toString(), fromUserId, toUserId))
+                        } else {
+                            TODO("VERSION.SDK_INT < O")
+                        }
                     }
 
                 }

@@ -2,6 +2,7 @@ package ge.nsakandelidze.customMessenger.presenter.chat
 
 import ge.nsakandelidze.customMessenger.domain.User
 import ge.nsakandelidze.customMessenger.storage.ConversationStorage
+import ge.nsakandelidze.customMessenger.storage.ImagesStorage
 import ge.nsakandelidze.customMessenger.storage.UserDataStorage
 import ge.nsakandelidze.customMessenger.storage.UserStateStorage
 import ge.nsakandelidze.customMessenger.view.chat.IChatView
@@ -10,6 +11,7 @@ class ChatPresenter(val chatView: IChatView) {
     private val conversationStorage = ConversationStorage.getInstance()
     private val userStateStorage = UserStateStorage.getInstance()
     private val userDataStorage = UserDataStorage.getInstance()
+    private val imageStorage: ImagesStorage = ImagesStorage.getInstance()
 
     fun getConversationForUserWithIdOf(otherUserId: String) {
         val idOfUser = userStateStorage.getIdOfUser()
@@ -40,4 +42,11 @@ class ChatPresenter(val chatView: IChatView) {
         }
     }
 
+    fun getImageForUserWithId(userId: String,failureConsumer: (String) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
+        imageStorage.getImageForUserId(userId, {
+            byteArrayConsumer(it)
+        }, {
+            failureConsumer(it)
+        })
+    }
 }
