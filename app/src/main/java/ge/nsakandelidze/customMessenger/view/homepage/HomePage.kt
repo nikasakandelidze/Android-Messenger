@@ -58,7 +58,7 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         conversationsListRecyclerView = view.findViewById<RecyclerView>(R.id.home_page_listing)
         conversationsListRecyclerView.adapter = HomePageListAdapter(listOfConversations, presenter, progressBar)
         conversationsListRecyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initState() {
