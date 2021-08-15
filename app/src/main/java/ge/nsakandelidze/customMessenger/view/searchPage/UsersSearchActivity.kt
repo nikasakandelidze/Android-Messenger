@@ -31,6 +31,8 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
         initViewComponents()
     }
 
+    private val MIN_CHAR_NUMBER = 3
+
     private fun initViewComponents() {
         backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener {
@@ -38,7 +40,13 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
         }
         searchBar = findViewById(R.id.username)
         searchBar.doOnTextChanged { text, start, count, after ->
-            presenter.getUsersBySearchInput(text.toString())
+            if (text.isNullOrEmpty()) {
+                presenter.getUsersBySearchInput("")
+            } else {
+                if (text.length >= MIN_CHAR_NUMBER) {
+                    presenter.getUsersBySearchInput(text.toString())
+                }
+            }
         }
         usersSearchListRecyclerView = findViewById<RecyclerView>(R.id.users_list)
         progressBar = findViewById(R.id.loader_progress_bar)

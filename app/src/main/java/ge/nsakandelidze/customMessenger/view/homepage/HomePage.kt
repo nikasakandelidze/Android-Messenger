@@ -1,8 +1,6 @@
 package ge.nsakandelidze.customMessenger.view.profile
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +16,6 @@ import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
-import java.util.stream.Collector
-import java.util.stream.Collectors
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,6 +55,8 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         return view
     }
 
+    private val MIN_CHAR_NUMBER = 3
+
     private fun initViewComponents(view: View) {
         progressBar = view.findViewById(R.id.loader_progress_bar)
         searchBar = view.findViewById(R.id.username)
@@ -71,7 +69,9 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
             if (text.isNullOrEmpty()) {
                 presenter.fetchConversationForCurrentUser("")
             } else {
-                presenter.fetchConversationForCurrentUser(text.toString())
+                if (text.length >= MIN_CHAR_NUMBER) {
+                    presenter.fetchConversationForCurrentUser(text.toString())
+                }
             }
         }
     }
