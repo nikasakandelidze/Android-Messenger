@@ -99,6 +99,11 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 
+    override fun clearRecycleView() {
+        listOfConversations.clear()
+        conversationsListRecyclerView.adapter?.notifyDataSetChanged()
+    }
+
     override fun updateConversationsList(conversations: List<ConversationDto>) {
         listOfConversations.clear()
         listOfConversations.addAll(conversations)
