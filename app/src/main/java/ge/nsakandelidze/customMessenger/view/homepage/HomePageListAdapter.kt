@@ -33,6 +33,7 @@ class HomePageListAdapter(
         val conversationItem = conversations[position]
         progressBar.visibility = View.VISIBLE
         homePagePresenter.getImageForUser( conversationItem.idOfAnotherUser,{
+            holder.conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
             progressBar.visibility = View.GONE
         }, {
             val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);

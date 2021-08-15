@@ -6,6 +6,7 @@ import ge.nsakandelidze.customMessenger.storage.UserDataStorage
 import ge.nsakandelidze.customMessenger.storage.UserStateStorage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
+import java.time.LocalDateTime
 
 class HomePagePresenter(val view: IHomePageView) {
 
@@ -48,13 +49,11 @@ class HomePagePresenter(val view: IHomePageView) {
     }
 
 
-    fun getImageForUser(userId: String, consumer: (Unit) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
-        val idOfUser = userStateStorage.getIdOfUser()
-        imageStorage.getImageForUserId(idOfUser, {
+    fun getImageForUser(userId: String, failConsumer: (Unit) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
+        imageStorage.getImageForUserId(userId, {
             byteArrayConsumer(it)
-            consumer(Unit)
         }, {
-            consumer(Unit)
+            failConsumer(Unit)
         })
     }
 }
