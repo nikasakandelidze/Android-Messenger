@@ -7,6 +7,7 @@ import ge.nsakandelidze.customMessenger.storage.UserStateStorage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
 import java.time.LocalDateTime
+import java.util.*
 
 class HomePagePresenter(val view: IHomePageView) {
 
@@ -15,7 +16,7 @@ class HomePagePresenter(val view: IHomePageView) {
     private val userDataStorage: UserDataStorage = UserDataStorage.getInstance()
     private val imageStorage: ImagesStorage = ImagesStorage.getInstance()
 
-    fun fetchConversationForCurrentUser() {
+    fun fetchConversationForCurrentUser(filterInput: String) {
         val idOfUser = userStateStorage.getIdOfUser()
         if (idOfUser.isEmpty()) {
             view.notifyUser("You are not logged in")
@@ -33,15 +34,22 @@ class HomePagePresenter(val view: IHomePageView) {
                     }
                     val lastConvo = conv.messages?.values?.sortedBy { it.date }?.last()
                     userDataStorage.getUserDataWithIdOf(idOfAnotherUser) { user ->
-                        view.AddNewConversationAndupdateConversationsList(
-                            ConversationDto(
-                                user.nickname.orEmpty(),
-                                "",
-                                lastConvo?.content.orEmpty(),
-                                lastConvo?.date.orEmpty(),
-                                idOfAnotherUser
-                            ), ls.size, counter++
-                        )
+                        if (user.nickname?.lowercase(Locale.getDefault())?.contains(
+                                filterInput.lowercase(
+                                    Locale.getDefault()
+                                )
+                            ) == true
+                        ) {
+                            view.AddNewConversationAndupdateConversationsList(
+                                ConversationDto(
+                                    user.nickname.orEmpty(),
+                                    "",
+                                    lastConvo?.content.orEmpty(),
+                                    lastConvo?.date.orEmpty(),
+                                    idOfAnotherUser
+                                ), ls.size, counter++
+                            )
+                        }
                     }
                 }
             }
@@ -49,7 +57,11 @@ class HomePagePresenter(val view: IHomePageView) {
     }
 
 
-    fun getImageForUser(userId: String, failConsumer: (Unit) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
+    fun getImageForUser(
+        userId: String,
+        failConsumer: (Unit) -> Unit,
+        byteArrayConsumer: (ByteArray) -> Unit
+    ) {
         imageStorage.getImageForUserId(userId, {
             byteArrayConsumer(it)
         }, {

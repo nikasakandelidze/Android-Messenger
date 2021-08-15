@@ -1,14 +1,18 @@
 package ge.nsakandelidze.customMessenger.view.profile
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import ge.nsakandelidze.customMessenger.R
 import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
@@ -30,8 +34,10 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
 
     private lateinit var conversationsListRecyclerView: RecyclerView
     private lateinit var presenter: HomePagePresenter
-    private var listOfConversations: MutableList<ConversationDto> = mutableListOf()
     private lateinit var progressBar: ProgressBar
+    private lateinit var searchBar: TextInputEditText
+
+    private var listOfConversations: MutableList<ConversationDto> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,15 +61,24 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
 
     private fun initViewComponents(view: View) {
         progressBar = view.findViewById(R.id.loader_progress_bar)
+        searchBar = view.findViewById(R.id.username)
         conversationsListRecyclerView = view.findViewById<RecyclerView>(R.id.home_page_listing)
-        conversationsListRecyclerView.adapter = HomePageListAdapter(listOfConversations, presenter, progressBar)
+        conversationsListRecyclerView.adapter =
+            HomePageListAdapter(listOfConversations, presenter, progressBar)
         conversationsListRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        searchBar.doOnTextChanged { text, start, before, count ->
+            if (text.isNullOrEmpty()) {
+                presenter.fetchConversationForCurrentUser("")
+            } else {
+                presenter.fetchConversationForCurrentUser(text.toString())
+            }
+        }
     }
 
     private fun initState() {
         this.presenter = HomePagePresenter(this)
-        this.presenter.fetchConversationForCurrentUser()
+        this.presenter.fetchConversationForCurrentUser("")
     }
 
     companion object {
@@ -92,9 +107,11 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
         length: Int,
         counter: Int
     ) {
-        listOfConversations.add(conversation)
-        if (counter == length - 1) {
-            conversationsListRecyclerView.adapter?.notifyItemInserted(listOfConversations.size-1)
+        if (counter == 0) {
+            listOfConversations.clear()
+            conversationsListRecyclerView.adapter?.notifyDataSetChanged()
         }
+        listOfConversations.add(conversation)
+        conversationsListRecyclerView.adapter?.notifyItemInserted(listOfConversations.size - 1)
     }
 }

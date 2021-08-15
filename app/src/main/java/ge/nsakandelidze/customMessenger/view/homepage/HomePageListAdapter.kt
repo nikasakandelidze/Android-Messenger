@@ -60,10 +60,13 @@ class HomePageListAdapter(
         holder.idOfAnotherUser.text = conversationItem.idOfAnotherUser
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun dateFormatter(messageDate: String): String {
 
-        val now = LocalDateTime.now()
+        val now = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
         val past = LocalDateTime.parse(messageDate, ISO_LOCAL_DATE_TIME)
 
 
