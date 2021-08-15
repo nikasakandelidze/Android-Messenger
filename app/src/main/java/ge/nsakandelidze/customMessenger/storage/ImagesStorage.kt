@@ -8,10 +8,15 @@ class ImagesStorage {
     private val reference = storage.getReference("images")
 
 
-    fun uploadImage(inputStream: InputStream, userId: String) {
+    fun uploadImage(
+        inputStream: InputStream,
+        userId: String,
+        sucessCallback: (Unit) -> Unit,
+        failureCallback: (Unit) -> Unit
+    ) {
         val uploadTask = reference.child(userId).putStream(inputStream)
-        uploadTask.addOnSuccessListener { }
-            .addOnFailureListener { }
+        uploadTask.addOnSuccessListener { sucessCallback(Unit) }
+            .addOnFailureListener { failureCallback(Unit) }
     }
 
     fun getImageForUserId(

@@ -83,7 +83,16 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         if (resultCode == Activity.RESULT_OK && requestCode == 200) {
             val stream = data?.data?.let { context?.contentResolver?.openInputStream(it) }
             if (stream != null) {
-                profilePresenter.updateImage(stream)
+                profilePresenter.updateImage(stream, {
+                    progressBar.visibility = View.VISIBLE
+                    this.profilePresenter.getImageForUser({
+                        progressBar.visibility = View.GONE
+                        image.setImageResource(R.drawable.avatar_image_placeholder)
+                    }, {
+                        showImage(it)
+                        progressBar.visibility = View.GONE
+                    })
+                }, {showMessage("Couldnt get image")})
             }
         } else {
             Toast.makeText(context, "Faield to choose image", Toast.LENGTH_LONG).show()
