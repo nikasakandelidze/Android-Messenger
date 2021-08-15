@@ -25,7 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/profile_picture" />
+        android:contentDescription="@string/profile_picture"
+        android:background="@drawable/round_background"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nickname_input_layout"

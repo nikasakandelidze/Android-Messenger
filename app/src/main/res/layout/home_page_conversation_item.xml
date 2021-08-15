@@ -9,7 +9,8 @@
         android:id="@+id/conversation_friend_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:contentDescription="@string/profile_picture" />
+        android:contentDescription="@string/profile_picture"
+        android:background="@drawable/round_background"/>
 
     <LinearLayout
         android:id="@+id/name_last_message_pair"

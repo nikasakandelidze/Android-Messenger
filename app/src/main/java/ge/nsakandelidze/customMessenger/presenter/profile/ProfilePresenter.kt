@@ -50,13 +50,12 @@ class ProfilePresenter(val view: IProfile) {
         imageStorage.uploadImage(stream, userId)
     }
 
-    fun getImageForUser(consumer: (Unit) -> Unit) {
+    fun getImageForUser(consumer: (Unit) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
         val idOfUser = userStateStorage.getIdOfUser()
         imageStorage.getImageForUserId(idOfUser, {
-            view.showImage(it)
+            byteArrayConsumer(it)
             consumer(Unit)
         }, {
-            view.showMessage(it)
             consumer(Unit)
         })
     }

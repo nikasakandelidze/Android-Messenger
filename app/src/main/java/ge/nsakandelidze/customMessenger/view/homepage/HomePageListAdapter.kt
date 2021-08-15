@@ -1,18 +1,26 @@
 package ge.nsakandelidze.customMessenger.view.homepage
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ge.nsakandelidze.customMessenger.R
+import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.chat.ChatPage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 
-class HomePageListAdapter(val conversations: List<ConversationDto>) :
+class HomePageListAdapter(
+    val conversations: List<ConversationDto>,
+    val homePagePresenter: HomePagePresenter,
+    val progressBar: ProgressBar
+) :
     RecyclerView.Adapter<ConversationItem>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationItem {
         val view: View = LayoutInflater.from(parent.context)
@@ -23,7 +31,14 @@ class HomePageListAdapter(val conversations: List<ConversationDto>) :
 
     override fun onBindViewHolder(holder: ConversationItem, position: Int) {
         val conversationItem = conversations[position]
-        holder.conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
+        progressBar.visibility = View.VISIBLE
+        homePagePresenter.getImageForUser( conversationItem.idOfAnotherUser,{
+            progressBar.visibility = View.GONE
+        }, {
+            val bitmap = BitmapFactory.decodeByteArray(it, 0, it.size);
+            holder.conversationImage.setImageBitmap(bitmap)
+            progressBar.visibility = View.GONE
+        })
         holder.conversationPersonName.text = conversationItem.nickname
         holder.lastMessageOfConversation.text = conversationItem.lastSentMessage
         holder.timeOfConversation.text = conversationItem.date

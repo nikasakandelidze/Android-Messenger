@@ -1,6 +1,7 @@
 package ge.nsakandelidze.customMessenger.presenter.homepage
 
 import ge.nsakandelidze.customMessenger.storage.ConversationStorage
+import ge.nsakandelidze.customMessenger.storage.ImagesStorage
 import ge.nsakandelidze.customMessenger.storage.UserDataStorage
 import ge.nsakandelidze.customMessenger.storage.UserStateStorage
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
@@ -11,6 +12,7 @@ class HomePagePresenter(val view: IHomePageView) {
     private val userStateStorage: UserStateStorage = UserStateStorage.getInstance()
     private val conversationStorage: ConversationStorage = ConversationStorage.getInstance()
     private val userDataStorage: UserDataStorage = UserDataStorage.getInstance()
+    private val imageStorage: ImagesStorage = ImagesStorage.getInstance()
 
     fun fetchConversationForCurrentUser() {
         val idOfUser = userStateStorage.getIdOfUser()
@@ -43,5 +45,16 @@ class HomePagePresenter(val view: IHomePageView) {
                 }
             }
         }
+    }
+
+
+    fun getImageForUser(userId: String, consumer: (Unit) -> Unit, byteArrayConsumer: (ByteArray) -> Unit) {
+        val idOfUser = userStateStorage.getIdOfUser()
+        imageStorage.getImageForUserId(idOfUser, {
+            byteArrayConsumer(it)
+            consumer(Unit)
+        }, {
+            consumer(Unit)
+        })
     }
 }

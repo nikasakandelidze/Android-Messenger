@@ -43,9 +43,9 @@ class ProfilePage : Fragment(R.layout.activity_profile), IProfile {
         this.profilePresenter = ProfilePresenter(this)
         this.profilePresenter.getUserData()
         progressBar.visibility = View.VISIBLE
-        this.profilePresenter.getImageForUser{
+        this.profilePresenter.getImageForUser({
             progressBar.visibility = View.GONE
-        }
+        }, {showImage(it)})
     }
 
     private fun initViewComponents(view: View) {
