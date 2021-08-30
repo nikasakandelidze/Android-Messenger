@@ -13,6 +13,8 @@ import ge.nsakandelidze.customMessenger.domain.User
 import ge.nsakandelidze.customMessenger.presenter.profile.UsersSearchPresenter
 import ge.nsakandelidze.customMessenger.view.homepage.UsersSearchListAdapter
 import ge.nsakandelidze.customMessenger.view.profile.IUsersSearch
+import java.util.*
+import kotlin.concurrent.schedule
 
 class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
 
@@ -44,7 +46,9 @@ class UsersSearchActivity : AppCompatActivity(), IUsersSearch {
                 presenter.getUsersBySearchInput("")
             } else {
                 if (text.length >= MIN_CHAR_NUMBER) {
-                    presenter.getUsersBySearchInput(text.toString())
+                    Timer("SettingUp", false).schedule(500) {
+                        presenter.getUsersBySearchInput(text.toString())
+                    }
                 }
             }
         }

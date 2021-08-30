@@ -1,6 +1,8 @@
 package ge.nsakandelidze.customMessenger.view.profile
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ import ge.nsakandelidze.customMessenger.presenter.homepage.HomePagePresenter
 import ge.nsakandelidze.customMessenger.view.dto.ConversationDto
 import ge.nsakandelidze.customMessenger.view.homepage.HomePageListAdapter
 import ge.nsakandelidze.customMessenger.view.homepage.IHomePageView
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -67,10 +71,14 @@ class HomePage : Fragment(R.layout.home_page_activiy), IHomePageView {
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         searchBar.doOnTextChanged { text, start, before, count ->
             if (text.isNullOrEmpty()) {
-                presenter.fetchConversationForCurrentUser("")
+                Timer("SettingUp", false).schedule(600) {
+                    presenter.fetchConversationForCurrentUser("")
+                }
             } else {
                 if (text.length >= MIN_CHAR_NUMBER) {
-                    presenter.fetchConversationForCurrentUser(text.toString())
+                    Timer("SettingUp", false).schedule(600) {
+                        presenter.fetchConversationForCurrentUser(text.toString())
+                    }
                 }
             }
         }
