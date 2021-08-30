@@ -4,17 +4,17 @@ Messiging applicaiton for Android platform machines. Implementation uses Firebas
 # Images
 
 ## Home Page
-(home page)[./statics/home_page.png]
+!(home page)[./statics/home_page.png]
 
 ## Profile Page
-(profile page)[./statics/profile_page.png]
+!(profile page)[./statics/profile_page.png]
 
 ## Login Page
-(login page)[./statics/login_page.png]
+!(login page)[./statics/login_page.png]
 
 ## Sign Up
-(signup page)[./statics/sign_up.png]
+!(signup page)[./statics/sign_up.png]
 
 ## Messaging page
-(message page)[./statics/messaging_page.png]
+!(message page)[./statics/messaging_page.png]
 
